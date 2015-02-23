@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Great Eight</title>
+
+    <!-- Bootstrap -->
+	<link href="css/css-animation.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+	<div class="container">
+		<h1 class="text-center">Great Eight</h1>
+		<div class="cards">
+			<img class="full-card" src="./images/8.png">
+			<img class="full-card" src="./images/7.png">
+		</div>
+		<div class="button-container">
+			<button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#learn">How to Play</button>
+			<button type="button" class="btn btn-primary btn-lg btn-block">Play!</button>
+		</div>
+		<!--How to play modal-->
+		<div class="modal fade" id="learn" tabindex="-1" role="dialog" aria-labelledby="myModalLable" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h2 class="modal-title text-center" id="myModalLabel">How to Play Great Eight</h2>
+					</div>
+					<div class="modal-body">
+						<h3>Starting Out</h3>
+						<p>The deck is shuffled and the top card is laid aside</p>
+						<p>Each player draws a card and the game begins</p>
+						<p>You draw a card and then discard a card</p>
+						<h3>The Cards</h3>
+						<p>There are 8 types of cards and each card has a special effect. They are listed as follows:</p>
+						<p>1: A player who discards this card chooses another player and guesses what card is in his/her hand. If the player guesses correctly, the target player is eliminated.</p>
+						<p>2: A player who discards this card chooses another player and looks at his/her hand.</p>
+						<p>3: A player who discards this card chooses another player with whom to compare hands. The player whose card has the lower value of the two is then eliminated. The cards are not shown to any other players.</p>
+						<p>4: A player who discards this card cannot be targeted by the effects of any other player’s cards until his/her next turn.</p>
+						<p>5: A player who discards this card chooses another player to discard his hand and re-draw.</p>
+						<p>6: A player who discards this card chooses another player and the two players trade hands.</p>
+						<p>7: A player whose hand contains both this card and a 5 or 6 must discard this card. It has no other effects.</p>
+						<p>8: A player who discards this card is eliminated.</p>
+						<h3>How to Win</h3>
+						<p>There are two ways to win:</p>
+						<p>Last one standing: if all other players are elimated you win</p>
+						<p>Player with highest card: If the deck runs out of cards, everyone in play compares their last cards. The player with the highest card wins.</p>
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Play!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
