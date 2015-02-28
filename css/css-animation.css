@@ -9,6 +9,10 @@
 	width: 568px;
 }
 
+.progress {
+	margin-top: 34%;
+}
+
 .container {
 	background-color: aliceblue;
 	width: 600px;
