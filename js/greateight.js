@@ -7,7 +7,7 @@ function Card(value) {
 function Deck() {
 	this.cards = new Array();
 	this.cardsPlayed = new Array();
-	
+	this.cardsUsed = 0;
 	this.makeDeck = makeDeck;
 	this.shuffle = shuffleDeck;
 	this.deal = dealCard;
@@ -52,7 +52,7 @@ function makeDeck() {
 			this.cards[i] = new Card(8);
 		}
 	}
-	this.cardsPlayed = 0;
+	this.cardsUsed = 0;
 }
 
 /*
@@ -71,13 +71,21 @@ function shuffleDeck(n) {
 		}
 	}
 }
-
+/*
+dealCard(): returns the card 
+*/
 function dealCard() {
-
+	if (this.cardsLeft() > 0) {
+		this.cardsUsed++;
+		return this.cards[this.cardsUsed-1];
+	}
+	else {
+		return null;
+	}
 }
 
 function getCardsLeft() {
-	return this.cards.length - this.cardsPlayed.length;
+	return this.cards.length - this.cardsUsed
 }
 
 
