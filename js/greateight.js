@@ -18,9 +18,9 @@ function Deck() {
 /*
 makeDeck(): Initializes a standard deck of playing cards
 */
-makeDeck() {
+function makeDeck() {
 	this.cards = new Array(16);
-	for(var i = 0; i < 16; i++) {
+	for (var i = 0; i < 16; i++) {
 		if (i<5) {
 			this.cards[i] = new Card(1);
 		}
@@ -54,3 +54,28 @@ makeDeck() {
 		}
 	}
 }
+
+/*
+shuffleDeck(n): Shuffles a deck of cards 'n' times
+*/
+function shuffleDeck(n) {
+	var i, j, k;
+	var temp;
+	
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < this.cards.length; j++) {
+			k = Math.floor(Math.random()*this.cards.length);
+			temp = this.cards[j];
+			this.cards[j] = this.cards[k];
+			this.cards[k] = this.cards[temp];			
+		}
+	}
+
+}
+
+
+
+
+
+
+
