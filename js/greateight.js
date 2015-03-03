@@ -14,6 +14,38 @@ function Deck() {
 	this.cardsLeft = getCardsLeft;
 }
 
+function Player(isHuman) {
+	this.isHuman = isHuman;
+	this.canPlay = true;
+	this.playedCards = new Array(16);
+	this.isTargetable = true;
+	this.currentCard;
+	this.newCard;
+}
+
+function Game() {
+	//game needs a deck created and shuffled
+	this.deck = new Deck();
+	this.deck.makeDeck();
+	this.deck.shuffle(3);
+	//deal off top card
+	this.deck.cardsUsed++;
+	//create the players
+	this.players = new Array(4);
+	this.players[0] = new Player(true);
+	for(var i = 1; i < 4; i++) {
+		this.players[i] = new Player(false);
+	}
+	//choose a player to start with
+	this.activePlayer = Math.floor(Math.random()*4);
+	//deal each player their first card
+	for(var i = 0; i < 4; i++) {
+		//console.log((i+this.activePlayer)%4);
+		this.players[(i+this.activePlayer)%4].currentCard = this.deck.deal();
+	}
+	//now the game continues in a loop until it is over.
+}
+
 /*
 makeDeck(): Initializes a standard deck of playing cards
 */
