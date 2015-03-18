@@ -21,9 +21,11 @@ function Player(isHuman) {
 	this.isTargetable = true;
 	this.currentCard;
 	this.newCard;
+	this.takeTurn = takeTurn;
 }
 
 function Game() {
+	this.gameOver = false;
 	//game needs a deck created and shuffled
 	this.deck = new Deck();
 	this.deck.makeDeck();
@@ -36,14 +38,41 @@ function Game() {
 	for(var i = 1; i < 4; i++) {
 		this.players[i] = new Player(false);
 	}
+	//this.playersLeft = playersLeftInPlay(this.players);
 	//choose a player to start with
 	this.activePlayer = Math.floor(Math.random()*4);
 	//deal each player their first card
 	for(var i = 0; i < 4; i++) {
-		//console.log((i+this.activePlayer)%4);
+		console.log((i+this.activePlayer)%4);
 		this.players[(i+this.activePlayer)%4].currentCard = this.deck.deal();
 	}
 	//now the game continues in a loop until it is over.
+	while(!this.gameOver) {
+		//each player takes a turn
+		this.players[this.activePlayer%4].newCard = this.deck.deal();
+		this.players[this.activePlayer%4].takeTurn();
+		this.activePlayer++;
+		console.log(this.deck.cardsLeft());
+		if(this.deck.cardsLeft() == 0) {
+			this.gameOver = true;
+		}
+	}
+	console.log("gameover");
+	
+	//game is over determine winner
+}
+
+/*
+takeTurn(): each player must take a turn
+*/
+function takeTurn(deck) {
+	
+	if(this.isHuman) {
+		//alert("Your Turn");
+	}
+	else {
+		
+	}
 }
 
 /*
@@ -118,6 +147,18 @@ function dealCard() {
 
 function getCardsLeft() {
 	return this.cards.length - this.cardsUsed
+}
+
+/*
+playersLeftInPlay: Return the total amount of players left in play
+*/
+function playersLeftInPlay() {
+	var count = 0; 
+	for(var i = 0; i < arguments.length; i++) {
+		if(arguments[i].canPlay)
+			count++;
+	}
+	return count;
 }
 
 
