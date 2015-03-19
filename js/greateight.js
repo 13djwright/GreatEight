@@ -38,7 +38,8 @@ function Game() {
 	for(var i = 1; i < 4; i++) {
 		this.players[i] = new Player(false);
 	}
-	//this.playersLeft = playersLeftInPlay(this.players);
+	this.playersLeft = playersLeftInPlay(this.players);
+	console.log("playersLeft: " + this.playersLeft);
 	//choose a player to start with
 	this.activePlayer = Math.floor(Math.random()*4);
 	//deal each player their first card
@@ -152,10 +153,10 @@ function getCardsLeft() {
 /*
 playersLeftInPlay: Return the total amount of players left in play
 */
-function playersLeftInPlay() {
+function playersLeftInPlay(params) {
 	var count = 0; 
-	for(var i = 0; i < arguments.length; i++) {
-		if(arguments[i].canPlay)
+	for(var i = 0; i < params.length; i++) {
+		if(params[i].canPlay)
 			count++;
 	}
 	return count;
