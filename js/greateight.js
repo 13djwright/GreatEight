@@ -43,7 +43,6 @@ function Game() {
 		this.players[i] = new Player(false, i);
 	}
 	this.playersLeft = playersLeftInPlay(this.players);
-	this.targetablePlayers = targetablePlayers(this.players);
 	//choose a player to start with
 	this.activePlayer = 0; //Player 1 always goes first, otherwise use Math.floor(Math.random()*4)
 	
@@ -98,7 +97,7 @@ function targetablePlayers(params) {
 	var res = "";
 	for(var i = 0; i < params.length; i++) {
 		if(params[i].isTargetable) {
-			res += " " + i;
+			res += " " + (i+1);
 		}
 	}
 	return res;
@@ -112,6 +111,7 @@ to play.
 function playCard(cardNum) {
 	var cardSelected;
 	var otherCard;
+	//$('#userInput').modal();
 	if(cardNum === 0) {
 		cardSelected = game.players[0].currentCard;
 		otherCard = game.players[0].newCard;
@@ -133,21 +133,33 @@ function playCard(cardNum) {
 	}
 	//get other input based on card.
 	var val = cardSelected.value;
+	var good = false;
 	switch(val) {
 		case 1:
 			//FIXME: only have the options of players available to select from.
-			var selectedPlayer = prompt("Enter the player you want to guess against: 2, 3, 4");
-			var guess = prompt("Enter the value of the card you think that player has (2-8).");
-			//FIXME: sanitize input
-			var message = "You guessed that player " + selectedPlayer + " was holding the " + guess + ". ";
-			if(game.players[selectedPlayer].currentCard.value === guess) {
-				message += "You guessed right!.";
-				//FIXME: make it so that player is knocked out.
+			
+			if(game.players[1].isTargetable) {
+				var player2 = document.createElement("input");
+				player2.setAttribute("type", "radio");
 			}
-			else { 
-				message += "You guessed wrong.";
+			
+			var selectedPlayer = prompt("Enter the player you want to guess against: " + targetablePlayers(game.players));
+			if(selectedPlayer >= 2 && selectedPlayer <= 4) {
+				var guess = prompt("Enter the value of the card you think that player has (2-8).");
+				//FIXME: sanitize input
+				var message = "You guessed that player " + selectedPlayer + " was holding the " + guess + ". ";
+				if(game.players[selectedPlayer].currentCard.value === guess) {
+					message += "You guessed right!.";
+					//FIXME: make it so that player is knocked out.
+				}
+				else { 
+					message += "You guessed wrong.";
+				}
+				addToGameLog(message);
 			}
-			addToGameLog(message);
+			else {
+				//bad input
+			}
 			break;
 		case 2:
 			var selectedPlayer = prompt("Enter the player you want to view their card: 2, 3, 4");
