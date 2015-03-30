@@ -1,8 +1,8 @@
 function Card(value) {
 	this.value = value;
 	this.image = "./images/"+value+".png";
-	this.width = 234;
-	this.height = 252;
+	this.width = 58;
+	this.height = 63;
 	this.alt = "Playing Card";
 	this.visible;
 }
@@ -18,7 +18,7 @@ function Deck() {
 }
 
 function Player(isHuman, num) {
-	this.playerNum = playerNum;
+	this.playerNum = num;
 	this.isHuman = isHuman;
 	this.canPlay = true;
 	this.playedCards = new Array(16);
@@ -72,14 +72,20 @@ function Game() {
 	//game is over determine winner
 }
 
-// Get the player based on player number
-function getPlayer( playerNum ) {
-	return players[playerNum];
-}
-
 // Function for displaying all of the player's cards
-function showPlayerCards( playerNum ) {
+function showPlayerCards( card ) {
+	this.card1 = game.players[0].currentCard;
+	this.card2 = game.players[0].newCard;
 	
+	var cardURL;
+	if( card = 1 )
+		cardURL = card1.image;
+	else if( card = 2 )
+		cardURL = card2.image;
+		
+	var element1 = document.getElementById("playerCard1");	
+	
+	element1.setAttribute("src", cardURL);
 }
 
 // Function for displaying a card through HTML
