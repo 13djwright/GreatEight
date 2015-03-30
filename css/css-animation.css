@@ -45,6 +45,15 @@
 	border: solid 1px black;
 }
 
+#playerCards {
+	height: 25%;
+	width: 50%;
+	position: absolute;
+	bottom: 20%;
+	left: 25%;
+	border: solid 1px purple;
+}
+
 #playarea {
 	margin: auto;
 	padding: 0;
