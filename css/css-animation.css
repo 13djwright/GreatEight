@@ -49,11 +49,9 @@
 	height: 25%;
 	width: 50%;
 	position: absolute;
-	bottom: 17%;
+	bottom: 20%;
 	left: 25%;
 	border: solid 1px purple;
-	margin-left: auto;
-	margin-right: auto;
 }
 
 #playarea {
