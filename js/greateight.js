@@ -205,42 +205,45 @@ function takeTurn() {
 }
 
  /*
-+decideCard(a, b): Bots' decision-making algorithm
-+	a and b are card values.
-+	Returns 0 to choose a, 1 to choose b
-+*/
-+
-+function decideAction(a, b) {
-+	if(a===8)
-+		return 1;
-+	if(b===8)
-+		return 0;
-+	
-+	if(a+b>11) {
-+		if(a===7)
-+			return 0;
-+		else
-+			return 1;
-+	}
-+	
-+	if(a===b)
-+		return 0;
-+	
-+	var high = a;
-+	var low = b;
-+	var decision = 1;
-+	var invert = 0;
-+	if(b > a) {
-+		high = b;
-+		low = a;
-+		invert = 1;
-+	}
-+	
-+	if(high === 6 && low < 4)
-+		decision = 0;
-+		
-+	return decision ^ invert;
-+}
+decideCard(a, b): Bots' decision-making algorithm
+	a and b are card values.
+	Returns 0 to choose a, 1 to choose b
+*/
+
+function decideAction(a, b) {
+	if(a===8)
+		return 1;
+	if(b===8)
+		return 0;
+	
+	if(a+b>11) {
+		if(a===7)
+			return 0;
+		else
+			return 1;
+	}
+	
+	if(a===b)
+		return 0;
+	
+	var high = a;
+	var low = b;
+	var decision = 1;
+	var invert = 0;
+	if(b > a) {
+		high = b;
+		low = a;
+		invert = 1;
+	}
+	
+	if(high === 6 && low < 4)
+		decision = 0;
+		
+	if(high === 2)
+		decision = 0;
+		
+	return decision ^ invert;
+}
 
 /*
 makeDeck(): Initializes a standard deck of playing cards
