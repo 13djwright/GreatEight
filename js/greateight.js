@@ -122,6 +122,41 @@ function playCard(cardNum) {
 		addToGameLog("cannot play a 5 or 6 when holding a 7");
 		return;
 	}
+	//get other input based on card.
+	var val = cardSelected.value;
+	switch(val) {
+		case 1:
+			//FIXME: only have the options of players available to select from.
+			var selectedPlayer = prompt("Enter the player you want to guess against: 2, 3, 4");
+			var guess = prompt("Enter the value of the card you think that player has (2-8).");
+			//FIXME: sanitize input
+			var message = "You guessed that player " + selectedPlayer + " was holding the " + guess + ". ";
+			if(game.players[selectedPlayer].currentCard.value === guess) {
+				message += "You guessed right!.";
+				//FIXME: make it so that player is knocked out.
+			}
+			else { 
+				message += "You guessed wrong.";
+			}
+			addToGameLog(message);
+			break;
+		case 2:
+		case 3:
+		case 4:
+			addToGameLog("You are now protected for 1 turn.");
+			//FIXME: make player1 protected
+			break;
+		case 5:
+		case 6:
+			break;
+		
+		case 7:
+			break;
+		case 8:
+			addToGameLog("You lost :(");
+			//
+			break;
+	}
 	//play the selected card and move the other card to the current card
 	game.players[0].playedCards.push(cardSelected);
 	game.players[0].currentCard = otherCard;
@@ -130,6 +165,7 @@ function playCard(cardNum) {
 	//update the display here (card played goes in box, move other card over, and hide card.
 	document.getElementById("playerCard2").style.display = "none"; //hide the new card
 	document.getElementById("playerCard1").src = otherCard.image;
+	//FIXME: make the played card show up in the box
 	
 }
 
