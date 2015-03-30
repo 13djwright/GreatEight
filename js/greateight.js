@@ -1,6 +1,9 @@
 function Card(value) {
 	this.value = value;
 	this.image = "./images/"+value+".png";
+	this.width = 234;
+	this.height = 252;
+	this.alt = "Playing Card";
 	this.visible;
 }
 
@@ -65,6 +68,17 @@ function Game() {
 	addToGameLog("Game over. ______ Wins!");
 	
 	//game is over determine winner
+}
+
+// Function for displaying a card through HTML
+function showCard( card ) {
+	var img = document.createElement("img");
+	img.src = card.image;
+	img.width = card.width;
+	img.height = card.height;
+	img.alt = card.alt;
+	
+	document.body.appendChild(img);
 }
 
 /*
