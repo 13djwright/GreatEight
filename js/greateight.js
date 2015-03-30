@@ -46,33 +46,26 @@ function Game() {
 	console.log("playersLeft: " + this.playersLeft);
 	addToGameLog("playersLeft: " + this.playersLeft);
 	//choose a player to start with
-	this.activePlayer = Math.floor(Math.random()*4);
+	this.activePlayer = 0; //Player 1 always goes first, otherwise use Math.floor(Math.random()*4)
+	
 	//deal each player their first card
 	for(var i = 0; i < 4; i++) {
-		//console.log((i+this.activePlayer)%4);
+		//the following is used for when its random who goes first but works no matter what
 		this.players[(i+this.activePlayer)%4].currentCard = this.deck.deal();
+	}
+	//if player 1 goes first, deal them another card.
+	if(this.activePlayer === 0) {
+		this.players[0].newCard = this.deck.deal();
+	}
+	else {
+		//bots go first.
 	}
 	
 	var element1 = document.getElementById("playerCard1");
 	element1.setAttribute("src", this.players[0].currentCard.image);
-	//now the game continues in a loop until it is over.
-	/*
-	while(!this.gameOver) {
-		//each player takes a turn
-		addToGameLog("Player number " + (this.activePlayer%4+1) + "'s turn.");
-		this.players[this.activePlayer%4].newCard = this.deck.deal();
-		this.players[this.activePlayer%4].takeTurn();
-		this.activePlayer++;
-		console.log(this.deck.cardsLeft());
-		addToGameLog(this.deck.cardsLeft() + " cards left.");
-		if(this.deck.cardsLeft() == 0) {
-			this.gameOver = true;
-		}
-	}
-	console.log("gameover");
-	addToGameLog("Game over. ______ Wins!");
-	*/
-	//game is over determine winner
+	element1 = document.getElementById("playerCard2");
+	element1.setAttribute("src", this.players[0].newCard.image);
+	//here the game is set up and needs to be updated a player selects a card
 }
 
 // Function for displaying all of the player's cards
