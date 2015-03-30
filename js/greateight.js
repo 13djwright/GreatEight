@@ -52,6 +52,9 @@ function Game() {
 		//console.log((i+this.activePlayer)%4);
 		this.players[(i+this.activePlayer)%4].currentCard = this.deck.deal();
 	}
+	
+	var element1 = document.getElementById("playerCard1");
+	element1.setAttribute("src", this.players[0].currentCard.image);
 	//now the game continues in a loop until it is over.
 	/*
 	while(!this.gameOver) {
