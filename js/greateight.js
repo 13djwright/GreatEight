@@ -43,8 +43,7 @@ function Game() {
 		this.players[i] = new Player(false, i);
 	}
 	this.playersLeft = playersLeftInPlay(this.players);
-	console.log("playersLeft: " + this.playersLeft);
-	addToGameLog("playersLeft: " + this.playersLeft);
+	this.targetablePlayers = targetablePlayers(this.players);
 	//choose a player to start with
 	this.activePlayer = 0; //Player 1 always goes first, otherwise use Math.floor(Math.random()*4)
 	
@@ -94,6 +93,16 @@ function showCard( card ) {
 	
 	document.body.appendChild(img);
 }
+
+function targetablePlayers(params) {
+	var res = "";
+	for(var i = 0; i < params.length; i++) {
+		if(params[i].isTargetable) {
+			res += " " + i;
+		}
+	}
+	return res;
+}
 /*
 playCard(cardNum): cardNum - used to tell what card was clicked.
 initial advance of the game "loop" where the player selects the card to play
@@ -141,6 +150,7 @@ function playCard(cardNum) {
 			addToGameLog(message);
 			break;
 		case 2:
+			var selectedPlayer = prompt("Enter the player you want to view their card: 2, 3, 4");
 		case 3:
 		case 4:
 			addToGameLog("You are now protected for 1 turn.");
