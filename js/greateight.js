@@ -101,17 +101,35 @@ along with any additional information needed, and then gets handed off to the bo
 to play.
 */
 function playCard(cardNum) {
-	var card;
+	var cardSelected;
+	var otherCard;
 	if(cardNum === 0) {
-		card = game.players[0].currentCard;
+		cardSelected = game.players[0].currentCard;
+		otherCard = game.players[0].newCard;
 	}
 	else if(cardNum === 1) {
-		card = game.players[0].newCard;
+		cardSelected = game.players[0].newCard;
+		otherCard = game.players[0].currentCard;
 	}
 	else {
 		console.log("something broken in playCard()");
 	}
-	//depending on the value of the card depends on the 
+	//depending on the value of the card depends on what actions need to be made
+	console.log("cardNum: " + cardNum);
+	if((cardSelected.value === 5 || cardSelected.value === 6) && otherCard.value === 7) {
+		//cannot play a 5 or 6 when holding a 7.
+		console.log("cannot play a 5 or 6 when holding a 7");
+		addToGameLog("cannot play a 5 or 6 when holding a 7");
+		return;
+	}
+	//play the selected card and move the other card to the current card
+	game.players[0].playedCards.push(cardSelected);
+	game.players[0].currentCard = otherCard;
+	//set the newCard element to nothing
+	game.players[0].newCard = null;
+	//update the display here (card played goes in box, move other card over, and hide card.
+	document.getElementById("playerCard2").style.display = "none"; //hide the new card
+	document.getElementById("playerCard1").src = otherCard.image;
 	
 }
 
