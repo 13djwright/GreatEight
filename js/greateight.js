@@ -94,6 +94,26 @@ function showCard( card ) {
 	
 	document.body.appendChild(img);
 }
+/*
+playCard(cardNum): cardNum - used to tell what card was clicked.
+initial advance of the game "loop" where the player selects the card to play
+along with any additional information needed, and then gets handed off to the bots
+to play.
+*/
+function playCard(cardNum) {
+	var card;
+	if(cardNum === 0) {
+		card = game.players[0].currentCard;
+	}
+	else if(cardNum === 1) {
+		card = game.players[0].newCard;
+	}
+	else {
+		console.log("something broken in playCard()");
+	}
+	//depending on the value of the card depends on the 
+	
+}
 
 /*
 takeTurn(): each player must take a turn
