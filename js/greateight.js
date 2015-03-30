@@ -17,7 +17,8 @@ function Deck() {
 	this.cardsLeft = getCardsLeft;
 }
 
-function Player(isHuman) {
+function Player(isHuman, num) {
+	this.playerNum = playerNum;
 	this.isHuman = isHuman;
 	this.canPlay = true;
 	this.playedCards = new Array(16);
@@ -37,9 +38,9 @@ function Game() {
 	this.deck.cardsUsed++;
 	//create the players
 	this.players = new Array(4);
-	this.players[0] = new Player(true);
+	this.players[0] = new Player(true, 0);
 	for(var i = 1; i < 4; i++) {
-		this.players[i] = new Player(false);
+		this.players[i] = new Player(false, i);
 	}
 	this.playersLeft = playersLeftInPlay(this.players);
 	console.log("playersLeft: " + this.playersLeft);
@@ -68,6 +69,16 @@ function Game() {
 	addToGameLog("Game over. ______ Wins!");
 	
 	//game is over determine winner
+}
+
+// Get the player based on player number
+function getPlayer( playerNum ) {
+	return players[playerNum];
+}
+
+// Function for displaying all of the player's cards
+function showPlayerCards( playerNum ) {
+	
 }
 
 // Function for displaying a card through HTML
