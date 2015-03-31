@@ -143,10 +143,10 @@ function displayPlayedCards( player, playerNum ) {
 }
 
 // Function that plays the bot's turn.
-// Needs expansion to actually do the card effects
+// FIXME: Needs expansion to actually do the card effects
 function botTurn( bot ) {
 	// Bot draws a card
-	bot.newCard = this.deck.deal();
+	bot.newCard = game.deck.deal();
 	
 	// Select which card to play
 	var cardSelected = decideCard( bot.currentCard.value, bot.newCard.value );
@@ -168,7 +168,7 @@ function botTurn( bot ) {
 	bot.playedCards.push(selectedCard);
 	bot.currentCard = otherCard;
 }
-
+//returns a string of players targetable (might not be needed anymore)
 function targetablePlayers(params) {
 	var res = "";
 	for(var i = 0; i < params.length; i++) {
@@ -239,7 +239,7 @@ function playCard(cardNum) {
 					//FIXME: make the played card show up in the box
 					$('#userInput').modal('hide');
 					displayPlayedCards(null, 1);
-
+					botLoop();
 				}
 				//error something was not checked
 				else{
@@ -430,6 +430,16 @@ function playCard(cardNum) {
 	addToGameLog("test");
 }
 
+//loop for bots to play
+function botLoop() {
+	for(var i = 1; i < 4; i++) {
+		botTurn(game.players[i]);
+	}
+	game.players[0].newCard = game.deck.deal();
+	document.getElementById("playerCard2").src = game.players[0].newCard.image;
+	document.getElementById("playerCard2").style.visibility = "visible";
+}
+
 /*
 takeTurn(): each player must take a turn
 */
@@ -442,6 +452,8 @@ function takeTurn() {
 		setTimeout(function(){}, 2000); //bot waits 2 seconds before playing
 	}
 }
+
+//Adds radio buttons for current players that are target-able
 function addTargetableButtons() {
 //clear out the modal to be remade. each switch case makes the modal custom
 	var selectedUserForm = document.getElementById("selectedPlayer");
