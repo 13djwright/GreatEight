@@ -292,17 +292,54 @@ function playCard(cardNum) {
 			break;
 		case 4:
 			addToGameLog("You are now protected for 1 turn.");
-			//FIXME: make player1 protected
+			game.players[0].playedCards.push(cardSelected);
+			game.players[0].currentCard = otherCard;
+			//set the newCard element to nothing
+			game.players[0].newCard = null;
+			//update the display here (card played goes in box, move other card over, and hide card.
+			document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+			document.getElementById("playerCard1").src = otherCard.image;
+			displayPlayedCards(null, 1);
+			game.players[0].isTargetable = false; //make sure this gets set back to to true at the beginning of next turn
 			break;
 		case 5:
+			addTargetableButtons();
+			document.getElementById('cardGuess').style.display = "none";
+			$('#userInput').modal();
+			button.addEventListener("click", function() {
+				var selectedPerson = $('input[name=user]:radio:checked').val();
+				if(selectedPerson) {
+					var selectedPersonCard = game.players[selectedPerson-1].currentCard;
+					game.players[0].playedCards.push(cardSelected);
+					game.players[0].currentCard = otherCard;
+					//set the newCard element to nothing
+					game.players[0].newCard = null;
+					//update the display here (card played goes in box, move other card over, and hide card.
+					document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+					document.getElementById("playerCard1").src = otherCard.image;
+					$('#userInput').modal('hide');
+					displayPlayedCards(null, 1);
+					var tempCard = game.players[0].currentCard;
+					game.players[0].currentCard = game.players[selectedPerson-1].currentCard;
+					game.players[selectedPerson-1].currentCard = game.players[0].currentCard;
+					document.getElementById("playerCard1").src = game.players[0].currentCard.image;
+					addToGameLog("You played a 5 and switched your " + tempCard.value + "with Player " + selectedPerson + "\'s " + game.players[0].currentCard.value);
+				}
+				else {
+					alert.style.display = "block";
+					alert.innerHTML = "Select a user";
+				}
+				}, false);
+			break;
 		case 6:
 			break;
-		
 		case 7:
 			break;
 		case 8:
 			addToGameLog("You lost :(");
-			//
+			game.players[0].isTargetable = false;
+			game.players[0].canPlay = false;
+			//game.gameOver = true; //This might not be needed if we want to keep the game going between the bots
 			break;
 	}	
 }
