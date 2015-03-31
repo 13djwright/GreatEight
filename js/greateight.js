@@ -170,12 +170,7 @@ function botCardEffect(cardValue) {
 function botTurn( bot ) {
 	// Bot draws a card
 	bot.newCard = game.deck.deal();
-<<<<<<< HEAD
-
-	
-=======
 	bot.isTargetable = true;
->>>>>>> ad82e280206e195e2b10a7b6341fd0a33c06619e
 	// Select which card to play
 	var cardSelected = decideCard( bot.currentCard.value, bot.newCard.value );
 	
@@ -192,10 +187,12 @@ function botTurn( bot ) {
 		selectedCard = bot.newCard;
 		otherCard = bot.currentCard;
 	}
-	var targetPlayer;
-	do {
+	//FIXME: What if there are no targetable players (someone played a 4) but still more than one person in the game. 
+	var targetPlayer = Math.floor(Math.random()*4);
+	//while bot.playerNum equals targetPlayer || !game.players[targetPlayer].isTargetable 
+	while(targetPlayer == bot.playerNum ||	!game.players[targetPlayer].isTargetable || !game.players[targetPlayer].canPlay) {
 		targetPlayer = Math.floor(Math.random()*4);
-	} while(targetPlayer == bot.playerNum && game.players[targetPlayer].isTargetable && game.players[targetPlayer].canPlay);
+	}
 	
 	bot.playedCards.push(selectedCard);
 	bot.currentCard = otherCard;
@@ -264,7 +261,7 @@ function botTurn( bot ) {
 			}
 			break;
 		case 6:
-			addToGameLog("Player " + bot.playerNum + " traded cards with Player " + (targetPlayer+1));
+			addToGameLog("Player " + (bot.playerNum+1) + " traded cards with Player " + (targetPlayer+1));
 			var temp = bot.currentCard;
 			bot.currentCard = game.players[targetPlayer].currentCard;
 			game.players[targetPlayer].currentCard = temp;
@@ -272,7 +269,7 @@ function botTurn( bot ) {
 		case 7:
 			break;
 		case 8:
-			addToGameLog("Player " + bot.playerNum + " is out of the game.");
+			addToGameLog("Player " + (bot.playerNum+1) + " is out of the game.");
 			bot.canPlay = false;
 			bot.isTargetable = false;
 			break;
