@@ -169,6 +169,7 @@ function botTurn( bot ) {
 	bot.playedCards.push(selectedCard);
 	bot.currentCard = otherCard;
 	displayPlayedCards(bot, null);
+	addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value);
 
 }
 //returns a string of players targetable (might not be needed anymore)
@@ -553,14 +554,14 @@ function decideCard(a, b) {
 /*
 chooseTarget(c): selects an opposing player to target with a card whose effect requires a target
 	c is the value of the card
-	playerNum is the number of the player playing the card (to avoid self-targeting)
+	playerNum is the player playing the card
 	
 	returns -1 if no legal targets
 */
-function chooseTarget(c,playerNum) {
+function chooseTarget(c, playerNum) {
 	validTargets = [];
 	for(i=0; i<game.players.length; i++) {
-		if(game.players[i].isTargetable)
+		if(game.players[i].isTargetable && i!=playerNum)
 			validTargets.push(i)
 	}
 	
@@ -568,23 +569,38 @@ function chooseTarget(c,playerNum) {
 		return -1
 	
 	// default to random target
-	var target = Math.floor(Math.random()*validTargets.length);
+	var target = validTargets[Math.floor(Math.random()*validTargets.length)];
 	switch(c) {
 	case 1:
 		// a player that's played the countess only has a few likely cards in hand
 		for(i=0; i<validTargets.length; i++)
-			if(game.players[i].playedCards[playedCards.length-1].value===7)
+			if(game.players[validTargets[i]].playedCards[game.players[validTargets[i]].playedCards.length-1].value===7)
 				target = i;
-		
+		break;
 	
 	case 2:
-		
+	// no real targeting priority with 2.
+		break;
 	
 	case 3:
-		
+		if(validTargets.length>1) {
+			target = validTargets[0];
+			for(i=1; i<validTargets.length; i++)
+				if(game.players[validTargets[i]].playedCards[game.players[validTargets[i]].playedCards.length-1]<
+				  game.players[validTargets[target]].playedCards[game.players[validTargets[target]].playedCards.length-1])
+					target = i;
+		}
+		break;
 	
 	case 5:
-		
+		if(validTargets.length>1) {
+			target = validTargets[0];
+			for(i=1; i<validTargets.length; i++)
+				if(game.players[validTargets[i]].playedCards[game.players[validTargets[i]].playedCards.length-1]>
+				  game.players[validTargets[target]].playedCards[game.players[validTargets[target]].playedCards.length-1])
+					target = i;
+		}
+		break;
 	
 	case 6:
 		
@@ -596,10 +612,11 @@ function chooseTarget(c,playerNum) {
 /*
 guessCard(target): Called when a 1 is played by the AI to decide what card it will guess
 	target is the player number chosen as the target
+	self is the player number making the guess
 */
 
-function guessCard(target) {
-	var played = [];
+function guessCard(target, self) {
+	var played = [self.currentCard];
 	for(i=0; i<4; i++) {
 		for(j=0; j<game.players[i].playedCards.length; j++) {
 			played.push(game.players[i].playedCards[j]);
@@ -618,14 +635,17 @@ function guessCard(target) {
 	for(i=6; i<9; i++)
 		if(playCounts[i-1]==0)
 			remGuesses.push(i);
-			
-	//if the target was chosen because of playing the countess
-	if(game.players[target].playedCards[players[target].playedCards.length-1].value===7) {
-		i=0;
-		while(remGuesses[i]<5)
-			i++
-		remGuesses.slice(i, remGuesses.length);	
-	}
+	
+	//we assume the target played their lower card
+	var stop = target.playedCards[playedCards.length];
+	
+	//unless it was the countess
+	if(game.players[target].playedCards[players[target].playedCards.length-1].value===7)
+		stop = 5;
+	i=0;
+	while(remGuesses[i]<stop)
+		i++
+	remGuesses.slice(i, remGuesses.length);	
 	guess = remGuesses[Math.floor(Math.random()*remGuesses.length)];
 	return guess;
 }
