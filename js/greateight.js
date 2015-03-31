@@ -216,7 +216,8 @@ function playCard(cardNum) {
 				if(selectedPerson && guess) {
 					console.log("check user and guess");
 					addToGameLog("You played a 1 and guessed that Player " + selectedPerson + " held a " + guess);
-					if(game.players[selectedPerson-1].currentCard.value === guess) {
+					//addToGameLog("Player " + selectedPerson + " is holding a " + game.players[selectedPerson-1].currentCard.value);
+					if(game.players[selectedPerson-1].currentCard.value == guess) {
 						//player was right
 						addToGameLog("You were right! Good guess.");
 						game.players[selectedPerson-1].isTargetable = false;
