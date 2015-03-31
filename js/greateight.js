@@ -207,7 +207,6 @@ function playCard(cardNum) {
 	document.getElementById("playCardButton").disabled = false;
 	switch(val) {
 		case 1:
-			//FIXME: only have the options of players available to select from.
 			addTargetableButtons();
 			document.getElementById("cardGuess").style.display = "block";
 			$('#userInput').modal();
@@ -216,11 +215,18 @@ function playCard(cardNum) {
 				var guess = $('input[name=guess]:radio:checked').val();
 				if(selectedPerson && guess) {
 					console.log("check user and guess");
+					addToGameLog("You played a 1 and guessed that Player " + selectedPerson + " held a " + guess);
 					if(game.players[selectedPerson-1].currentCard.value === guess) {
 						//player was right
+						addToGameLog("You were right! Good guess.");
+						game.players[selectedPerson-1].isTargetable = false;
+						game.players[selectedPerson-1].canPlay = false;
+						game.players[selectedPerson-1].playedCards.push(game.players[selectedPerson-1].currentCard);
+						displayPlayedCards(null, selectedPerson);
 					}
 					else {
 						//player was wrong
+						addToGameLog("You were wrong :(");
 					}
 					game.players[0].playedCards.push(cardSelected);
 					game.players[0].currentCard = otherCard;
@@ -420,6 +426,7 @@ function playCard(cardNum) {
 			//game.gameOver = true; //This might not be needed if we want to keep the game going between the bots
 			break;
 	}	
+	addToGameLog("test");
 }
 
 /*
