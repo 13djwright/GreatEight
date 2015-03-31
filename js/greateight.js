@@ -208,6 +208,7 @@ function playCard(cardNum) {
 					document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
 					document.getElementById("playerCard1").src = otherCard.image;
 					//FIXME: make the played card show up in the box
+					$('#userInput').modal('hide');
 					displayPlayedCards(null, 1);
 
 				}
