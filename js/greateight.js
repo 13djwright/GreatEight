@@ -194,7 +194,7 @@ function playCard(cardNum) {
 				var guess = $('input[name=guess]:radio:checked').val();
 				if(selectedPerson && guess) {
 					console.log("check user and guess");
-					if(game.players[selectedPerson].currentCard.value === guess) {
+					if(game.players[selectedPerson-1].currentCard.value === guess) {
 						//player was right
 					}
 					else {
