@@ -18,6 +18,14 @@
 	border: solid 1px blue;
 }
 
+#playerTop img{
+	-webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
 #playerBottom {
 	height: 15%;
 	width: 90%;
@@ -36,6 +44,14 @@
 	border: solid 1px red;
 }
 
+#playerLeft img {
+	-webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
 #playerRight {
 	height: 66%;
 	width: 15%;
@@ -43,6 +59,14 @@
 	top: 17%;
 	right: 1%;
 	border: solid 1px black;
+}
+
+#playerRight img {
+	-webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
 }
 
 #playerCards {

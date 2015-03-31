@@ -1,8 +1,8 @@
 function Card(value) {
 	this.value = value;
 	this.image = "./images/"+value+".png";
-	this.width = 58;
-	this.height = 63;
+	this.width = 234;
+	this.height = 252;
 	this.alt = "Playing Card";
 	this.visible;
 }
@@ -60,8 +60,14 @@ function Game() {
 	}
 	
 	// TEST
-	this.players[0].playedCards.push(this.players[0].newCard);
+	this.players[0].playedCards.push(this.players[0].currentCard);
+	this.players[1].playedCards.push(this.players[1].currentCard);
+	this.players[2].playedCards.push(this.players[2].currentCard);
+	this.players[3].playedCards.push(this.players[3].currentCard);
 	displayPlayedCards(this.players[0]);
+	displayPlayedCards(this.players[1]);
+	displayPlayedCards(this.players[2]);
+	displayPlayedCards(this.players[3]);
 	// END TEST
 	
 	var element1 = document.getElementById("playerCard1");
@@ -126,8 +132,8 @@ function displayPlayedCards( player ) {
 	// Draw all of our images
 	for( var i = 0; i < player.playedCards.length; i++ ) {
 		elem.setAttribute("src", player.playedCards[i].image);
-		elem.setAttribute("height", player.playedCards[i].height*1.8);
-		elem.setAttribute("width", player.playedCards[i].width*1.8);
+		elem.setAttribute("height", player.playedCards[i].height/2.05);
+		elem.setAttribute("width", player.playedCards[i].width/2.05);
 		elem.setAttribute("alt", player.playedCards[i].alt);
 		dv.appendChild(elem);
 	}
