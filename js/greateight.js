@@ -142,6 +142,33 @@ function displayPlayedCards( player, playerNum ) {
 	}
 }
 
+// Function that plays the bot's turn.
+// Needs expansion to actually do the card effects
+function botTurn( bot ) {
+	// Bot draws a card
+	bot.newCard = this.deck.deal();
+	
+	// Select which card to play
+	var cardSelected = decideCard( bot.currentCard.value, bot.newCard.value );
+	
+	var selectedCard;
+	var otherCard;
+	
+	if( !cardSelected ) {
+		// Play currentCard
+		selectedCard = bot.currentCard;
+		otherCard = bot.newCard;
+	}
+	else if( cardSelected ) {
+		// Play newCard
+		selectedCard = bot.newCard;
+		otherCard = bot.currentCard;
+	}
+	
+	bot.playedCards.push(selectedCard);
+	bot.currentCard = otherCard;
+}
+
 function targetablePlayers(params) {
 	var res = "";
 	for(var i = 0; i < params.length; i++) {
