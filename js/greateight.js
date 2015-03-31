@@ -95,7 +95,7 @@ function showCard( card ) {
 
 function displayPlayedCards( player ) {
 	for( var i = 0; i < player.playedCards.length; i++ ) {
-		document.write("<img align = 'center' src = " + player.playedCards[i].image + "/>";
+		document.write("<img align = 'center' src = " + player.playedCards[i].image + "/>");
 	}
 }
 
