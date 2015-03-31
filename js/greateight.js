@@ -181,6 +181,7 @@ function targetablePlayers(params) {
 	}
 	return res;
 }
+
 /*
 playCard(cardNum): cardNum - used to tell what card was clicked.
 initial advance of the game "loop" where the player selects the card to play
@@ -190,7 +191,6 @@ to play.
 function playCard(cardNum) {
 	var cardSelected;
 	var otherCard;
-	//$('#userInput').modal();
 	if(cardNum === 0) {
 		cardSelected = game.players[0].currentCard;
 		otherCard = game.players[0].newCard;
@@ -213,7 +213,7 @@ function playCard(cardNum) {
 			addTargetableButtons();
 			document.getElementById("cardGuess").style.display = "block";
 			$('#userInput').modal();
-			button.addEventListener("click", function() {
+			document.getElementById("playCardButton").onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				var guess = $('input[name=guess]:radio:checked').val();
 				if(selectedPerson && guess) {
@@ -249,13 +249,13 @@ function playCard(cardNum) {
 					alert.innerHTML = "Select a user and a card guess.";
 					alert.style.display = "block";
 				}
-			}, false);
+			};
 			break;
 		case 2:
 			addTargetableButtons();
 			document.getElementById('cardGuess').style.display = "none";
 			$('#userInput').modal();
-			button.addEventListener("click", function() {
+			button.onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				if(selectedPerson) {
 					var selectedPersonCard = game.players[selectedPerson-1].currentCard;
@@ -276,14 +276,14 @@ function playCard(cardNum) {
 					alert.style.display = "block";
 					alert.innerHTML = "Select a user";
 				}
-			}, false);
+			};
 			
 			break;
 		case 3:
 			addTargetableButtons();
 			document.getElementById('cardGuess').style.display = "none";
 			$('#userInput').modal();
-			button.addEventListener("click", function() {
+			button.onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				if(selectedPerson) {
 					var selectedPersonCard = game.players[selectedPerson-1].currentCard;
@@ -318,7 +318,7 @@ function playCard(cardNum) {
 					alert.style.display = "block";
 					alert.innerHTML = "Select a user";
 				}
-			}, false);
+			};
 			break;
 		case 4:
 			addToGameLog("You are now protected for 1 turn.");
@@ -342,7 +342,7 @@ function playCard(cardNum) {
 					document.getElementById("playCardButton").disabled = true;
 			}
 			$('#userInput').modal();
-			button.addEventListener("click", function() {
+			button.onclick =  function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				if(selectedPerson) {
 					var selectedPersonCard = game.players[selectedPerson-1].currentCard;
@@ -366,7 +366,7 @@ function playCard(cardNum) {
 					alert.style.display = "block";
 					alert.innerHTML = "Select a user";
 				}
-				}, false);
+				};
 			break;
 		case 5:
 			addTargetableButtons();
@@ -377,7 +377,7 @@ function playCard(cardNum) {
 					document.getElementById("playCardButton").disabled = true;
 			}
 			$('#userInput').modal();
-			button.addEventListener("click", function() {
+			button.onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				if(selectedPerson) {
 					var selectedPersonCard = game.players[selectedPerson-1].currentCard;
@@ -407,7 +407,7 @@ function playCard(cardNum) {
 					alert.style.display = "block";
 					alert.innerHTML = "Select a user";
 				}
-				}, false);
+				};
 			break;
 		case 7:
 			addToGameLog("You played a 7");
@@ -422,7 +422,7 @@ function playCard(cardNum) {
 			botLoop();
 			break;
 		case 8:
-			addToGameLog("You lost :(");
+			addToGameLog("You played the 8. You lost :(");
 			game.players[0].playedCards.push(cardSelected);
 			game.players[0].currentCard = otherCard;
 			//set the newCard element to nothing
