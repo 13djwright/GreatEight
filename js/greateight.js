@@ -582,7 +582,14 @@ function chooseTarget(c, playerNum) {
 		break;
 	
 	case 3:
-		
+		if(validTargets.length>1) {
+			target = validTargets[0];
+			for(i=1; i<validTargets.length; i++)
+				if(game.players[validTargets[i]].playedCards[game.players[validTargets[i]].playedCards.length-1]<
+				  game.players[validTargets[target]].playedCards[game.players[validTargets[target]].playedCards.length-1])
+					target = i;
+		}
+		break;
 	
 	case 5:
 		if(validTargets.length>1) {
