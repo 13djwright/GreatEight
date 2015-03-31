@@ -210,6 +210,8 @@ function playCard(cardNum) {
 					document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
 					document.getElementById("playerCard1").src = otherCard.image;
 					//FIXME: make the played card show up in the box
+					displayPlayedCards(null, 1);
+
 				}
 				//error something was not checked
 				else{
@@ -218,8 +220,6 @@ function playCard(cardNum) {
 					alert.style.display = "block";
 				}
 			}, false);
-			displayPlayedCards(null, 1);
-
 			break;
 		case 2:
 			var selectedPlayer = prompt("Enter the player you want to view their card: 2, 3, 4");
