@@ -167,6 +167,7 @@ function botTurn( bot ) {
 	
 	bot.playedCards.push(selectedCard);
 	bot.currentCard = otherCard;
+	displayPlayedCards(null, bot.playerNum);
 }
 //returns a string of players targetable (might not be needed anymore)
 function targetablePlayers(params) {
@@ -267,6 +268,7 @@ function playCard(cardNum) {
 					displayPlayedCards(null, 1);
 					window.alert("Player " + selectedPerson + " is holding a " + selectedPersonCard.value);
 					addToGameLog("You played a 2. Player" + selectedPerson + " is holding a " + selectedPersonCard.value);
+					botLoop();
 				}
 				else {
 					alert.style.display = "block";
@@ -308,6 +310,7 @@ function playCard(cardNum) {
 					else {
 						console.log("something is broken in case 3");
 					}
+					botLoop();
 				}
 				else {
 					alert.style.display = "block";
@@ -326,6 +329,7 @@ function playCard(cardNum) {
 			document.getElementById("playerCard1").src = otherCard.image;
 			displayPlayedCards(null, 1);
 			game.players[0].isTargetable = false; //make sure this gets set back to to true at the beginning of next turn
+			botLoop();
 			break;
 		case 6:
 			addTargetableButtons();
@@ -354,6 +358,7 @@ function playCard(cardNum) {
 					game.players[selectedPerson-1].currentCard = game.players[0].currentCard;
 					document.getElementById("playerCard1").src = game.players[0].currentCard.image;
 					addToGameLog("You played a 6 and switched your " + tempCard.value + "with Player " + selectedPerson + "\'s " + game.players[0].currentCard.value);
+					botLoop();
 				}
 				else {
 					alert.style.display = "block";
@@ -394,6 +399,7 @@ function playCard(cardNum) {
 						addToGameLog("No cards left to draw, so Player " + selectedPerson + " drew the left over card");
 						game.players[selectedPerson-1].currentCard = game.deck.cards[0];
 					}
+					botLoop();
 				}
 				else {
 					alert.style.display = "block";
@@ -411,6 +417,7 @@ function playCard(cardNum) {
 			document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
 			document.getElementById("playerCard1").src = otherCard.image;
 			displayPlayedCards(null, 1);
+			botLoop();
 			break;
 		case 8:
 			addToGameLog("You lost :(");
@@ -425,6 +432,7 @@ function playCard(cardNum) {
 			game.players[0].isTargetable = false;
 			game.players[0].canPlay = false;
 			//game.gameOver = true; //This might not be needed if we want to keep the game going between the bots
+			botLoop();
 			break;
 	}	
 	addToGameLog("test");
@@ -433,8 +441,11 @@ function playCard(cardNum) {
 //loop for bots to play
 function botLoop() {
 	for(var i = 1; i < 4; i++) {
-		botTurn(game.players[i]);
+		if(game.players[i].canPlay) {
+			botTurn(game.players[i]);
+		}
 	}
+	//deal card to player.
 	game.players[0].newCard = game.deck.deal();
 	document.getElementById("playerCard2").src = game.players[0].newCard.image;
 	document.getElementById("playerCard2").style.visibility = "visible";
