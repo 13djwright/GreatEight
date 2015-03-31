@@ -171,6 +171,7 @@ function botTurn( bot ) {
 	// Bot draws a card
 	bot.newCard = game.deck.deal();
 	bot.isTargetable = true;
+	
 	// Select which card to play
 	var cardSelected = decideCard( bot.currentCard.value, bot.newCard.value );
 	
