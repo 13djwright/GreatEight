@@ -436,7 +436,6 @@ function playCard(cardNum) {
 			botLoop();
 			break;
 	}	
-	addToGameLog("test");
 }
 
 //loop for bots to play
