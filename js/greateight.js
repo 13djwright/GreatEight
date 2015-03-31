@@ -317,27 +317,7 @@ chooseTarget(c): selects an opposing player to target with a card whose effect r
 function chooseTarget(c) {
 	switch(c) {
 	case 1:
-		var played = [];
-		for(i=0; i<4; i++) {
-			for(j=0; j<game.players[i].playedCards.length; j++) {
-				played.push(game.players[i].playedCards[j]);
-			}
-		}
-		
-		playCounts = [0, 0, 0, 0, 0, 0, 0, 0]
-		for(i=0; i<played.length; i++) {
-			playCounts[played[i]-1]++;
-		}
-		
-		remGuesses = [];
-		for(i=2; i<6; i++)
-			if(playCounts[i-1]<2)
-				remGuesses.push(i);
-		for(i=6; i<9; i++)
-			if(playCounts[i-1]==0)
-				remGuesses.push(i);
-				
-		guess = remGuesses[Math.floor(Math.random()*remGuesses.length)];
+			
 	
 	case 2:
 		
@@ -351,6 +331,33 @@ function chooseTarget(c) {
 	case 6:
 		
 	}
+}
+
+/*
+guessCard(): Called when a 1 is played by the AI to decide what card it will guess
+*/
+
+function guessCard() {
+	var played = [];
+	for(i=0; i<4; i++) {
+		for(j=0; j<game.players[i].playedCards.length; j++) {
+			played.push(game.players[i].playedCards[j]);
+		}
+	}
+
+	playCounts = [0, 0, 0, 0, 0, 0, 0, 0]
+	for(i=0; i<played.length; i++) {
+		playCounts[played[i]-1]++;
+	}
+
+	remGuesses = [];
+	for(i=2; i<6; i++)
+		if(playCounts[i-1]<2)
+			remGuesses.push(i);
+	for(i=6; i<9; i++)
+		if(playCounts[i-1]==0)
+			remGuesses.push(i);
+	guess = remGuesses[Math.floor(Math.random()*remGuesses.length)];
 }
 
 /*
