@@ -102,7 +102,7 @@ function displayPlayedCards( player, playerNum ) {
 		this.player = player;
 	else if( player === null )
 		this.player = game.players[playerNum];
-	var playerNum = player.playerNum+1;
+	var playerNum = this.player.playerNum+1;
 	var playerName;
 	var displayName;
 	if( playerNum === 1 ) {
@@ -133,11 +133,11 @@ function displayPlayedCards( player, playerNum ) {
 	var text = document.createTextNode(displayName);
 	dv.appendChild(text);
 	// Draw all of our images
-	for( var i = 0; i < player.playedCards.length; i++ ) {
-		elem.setAttribute("src", player.playedCards[i].image);
-		elem.setAttribute("height", player.playedCards[i].height/2.05);
-		elem.setAttribute("width", player.playedCards[i].width/2.05);
-		elem.setAttribute("alt", player.playedCards[i].alt);
+	for( var i = 0; i < this.player.playedCards.length; i++ ) {
+		elem.setAttribute("src", this.player.playedCards[i].image);
+		elem.setAttribute("height", this.player.playedCards[i].height/2.05);
+		elem.setAttribute("width", this.player.playedCards[i].width/2.05);
+		elem.setAttribute("alt", this.player.playedCards[i].alt);
 		dv.appendChild(elem);
 	}
 }
