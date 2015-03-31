@@ -209,7 +209,7 @@ function playCard(cardNum) {
 					alert.style.display = "block";
 				}
 			}, false);
-			displayPlayedCards(game.players[0]);
+			displayPlayedCards(null, 1);
 
 			break;
 		case 2:
