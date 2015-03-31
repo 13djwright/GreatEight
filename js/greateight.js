@@ -93,6 +93,9 @@ function showCard( card ) {
 	document.body.appendChild(img);
 }
 
+
+// START IN PROGRESS BY STEVEN
+// Function for displaying the player's played cards
 function displayPlayedCards( playerNum ) {
 	this.player = game.players[playerNum];
 	var playerName;
@@ -110,6 +113,7 @@ function displayPlayedCards( playerNum ) {
 		document.write("<img align = 'center' src = " + player.playedCards[i].image + "/>");
 	}
 }
+// END IN PROGRESS BY STEVEN
 
 function targetablePlayers(params) {
 	var res = "";
