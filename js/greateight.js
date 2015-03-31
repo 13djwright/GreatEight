@@ -166,6 +166,10 @@ function playCard(cardNum) {
 			//FIXME: only have the options of players available to select from.
 			addTargetableButtons();
 			$('#userInput').modal();
+			var button = document.getElementById("playCardButton");
+			button.addEventListener("click", function() {
+				alert("test");
+			}, false);
 			break;
 		case 2:
 			var selectedPlayer = prompt("Enter the player you want to view their card: 2, 3, 4");
