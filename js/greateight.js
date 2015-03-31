@@ -64,10 +64,10 @@ function Game() {
 	this.players[1].playedCards.push(this.players[1].currentCard);
 	this.players[2].playedCards.push(this.players[2].currentCard);
 	this.players[3].playedCards.push(this.players[3].currentCard);
-	displayPlayedCards(this.players[0]);
-	displayPlayedCards(this.players[1]);
-	displayPlayedCards(this.players[2]);
-	displayPlayedCards(this.players[3]);
+	displayPlayedCards(this.players[0], null);
+	displayPlayedCards(this.players[1], null);
+	displayPlayedCards(this.players[2], null);
+	displayPlayedCards(this.players[3], null);
 	// END TEST
 	
 	var element1 = document.getElementById("playerCard1");
@@ -108,11 +108,13 @@ function showCard( card ) {
 
 // START IN PROGRESS BY STEVEN
 // Function for displaying the player's played cards
-// If calling this from Game, pass the actual player with playerNum=NULL.
-// If calling this from OUTSIDE of Game, pass the playerNum with player=NULL;
+// If calling this from Game, pass the actual player with playerNum=null
+// If calling this from OUTSIDE of Game, pass the playerNum with player=null
 function displayPlayedCards( player, playerNum ) {
-	if( playerNum
-	this.player = player;
+	if( playerNum === null )
+		this.player = player;
+	else if( player === null )
+		this.play = game.players[playerNum];
 	var playerNum = player.playerNum+1;
 	var playerName;
 	if( playerNum === 1 )
