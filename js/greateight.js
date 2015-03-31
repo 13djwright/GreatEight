@@ -183,12 +183,16 @@ function playCard(cardNum) {
 	}
 	//get other input based on card.
 	var val = cardSelected.value;
+	var button = document.getElementById("playCardButton");
+	var alert = document.getElementById("alert");
+	alert.style.display = "none";
+
 	switch(val) {
 		case 1:
 			//FIXME: only have the options of players available to select from.
 			addTargetableButtons();
+			document.getElementById("cardGuess").style.display = "block";
 			$('#userInput').modal();
-			var button = document.getElementById("playCardButton");
 			button.addEventListener("click", function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				var guess = $('input[name=guess]:radio:checked').val();
@@ -214,14 +218,38 @@ function playCard(cardNum) {
 				}
 				//error something was not checked
 				else{
-					var alert = document.getElementById("alert");
-					alert.innerHTML = "Something was not selected!";
+					alert.innerHTML = "Select a user and a card guess.";
 					alert.style.display = "block";
 				}
 			}, false);
 			break;
 		case 2:
-			var selectedPlayer = prompt("Enter the player you want to view their card: 2, 3, 4");
+			addTargetableButtons();
+			document.getElementById('cardGuess').style.display = "none";
+			$('#userInput').modal();
+			button.addEventListener("click", function() {
+				var selectedPerson = $('input[name=user]:radio:checked').val();
+				if(selectedPerson) {
+					var selectedPersonCard = game.players[selectedPerson-1].currentCard;
+					game.players[0].playedCards.push(cardSelected);
+					game.players[0].currentCard = otherCard;
+					//set the newCard element to nothing
+					game.players[0].newCard = null;
+					//update the display here (card played goes in box, move other card over, and hide card.
+					document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+					document.getElementById("playerCard1").src = otherCard.image;
+					$('#userInput').modal('hide');
+					displayPlayedCards(null, 1);
+					window.alert("Player " + selectedPerson + " is holding a " + selectedPersonCard.value);
+					addToGameLog("You played a 2. Player" + selectedPerson + " is holding a " + selectedPersonCard.value);
+				}
+				else {
+					alert.style.display = "block";
+					alert.innerHTML = "Select a user";
+				}
+			}, false);
+			
+			break;
 		case 3:
 		case 4:
 			addToGameLog("You are now protected for 1 turn.");
