@@ -137,29 +137,8 @@ function playCard(cardNum) {
 	switch(val) {
 		case 1:
 			//FIXME: only have the options of players available to select from.
-			
-			if(game.players[1].isTargetable) {
-				var player2 = document.createElement("input");
-				player2.setAttribute("type", "radio");
-			}
-			
-			var selectedPlayer = prompt("Enter the player you want to guess against: " + targetablePlayers(game.players));
-			if(selectedPlayer >= 2 && selectedPlayer <= 4) {
-				var guess = prompt("Enter the value of the card you think that player has (2-8).");
-				//FIXME: sanitize input
-				var message = "You guessed that player " + selectedPlayer + " was holding the " + guess + ". ";
-				if(game.players[selectedPlayer].currentCard.value === guess) {
-					message += "You guessed right!.";
-					//FIXME: make it so that player is knocked out.
-				}
-				else { 
-					message += "You guessed wrong.";
-				}
-				addToGameLog(message);
-			}
-			else {
-				//bad input
-			}
+			addTargetableButtons();
+			$('#userInput').modal();
 			break;
 		case 2:
 			var selectedPlayer = prompt("Enter the player you want to view their card: 2, 3, 4");
@@ -179,6 +158,7 @@ function playCard(cardNum) {
 			//
 			break;
 	}
+	/*
 	//play the selected card and move the other card to the current card
 	game.players[0].playedCards.push(cardSelected);
 	game.players[0].currentCard = otherCard;
@@ -188,6 +168,7 @@ function playCard(cardNum) {
 	document.getElementById("playerCard2").style.display = "none"; //hide the new card
 	document.getElementById("playerCard1").src = otherCard.image;
 	//FIXME: make the played card show up in the box
+	*/
 	
 }
 
@@ -203,7 +184,49 @@ function takeTurn() {
 		setTimeout(function(){}, 2000); //bot waits 2 seconds before playing
 	}
 }
+function addTargetableButtons() {
+//clear out the modal to be remade. each switch case makes the modal custom
+	var selectedUserForm = document.getElementById("selectedPlayer");
+	while(selectedUserForm.firstChild) {
+		selectedUserForm.removeChild(selectedUserForm.firstChild);
+	}
+	
+	var breakNode = document.createElement("br");
+	if(game.players[1].isTargetable) {
+		var player2 = document.createElement("input");
+		player2.setAttribute("type", "radio");
+		player2.value = 2;
+		player2.name = "user";
+		selectedUserForm.appendChild(player2);
+		var word = document.createElement("p");
+		word.innerHTML = "2";
+		selectedUserForm.appendChild(word);
+		selectedUserForm.appendChild(breakNode);
+	}
+	if(game.players[2].isTargetable) {
+		var player3 = document.createElement("input");
+		player3.setAttribute("type", "radio");
+		player3.value = 3;
+		player3.name = "user";
+		selectedUserForm.appendChild(player3);
+		var word = document.createElement("p");
+		word.innerHTML = "3";
+		selectedUserForm.appendChild(word);
+		selectedUserForm.appendChild(breakNode);
+	}
+	if(game.players[3].isTargetable) {
+		var player4 = document.createElement("input");
+		player4.setAttribute("type", "radio");
+		player4.value = 4;
+		player4.name = "user";
+		selectedUserForm.appendChild(player4);
+		var word = document.createElement("p");
+		word.innerHTML = "4";
+		selectedUserForm.appendChild(word);
+		selectedUserForm.appendChild(breakNode);
+	}
 
+}
 /*
 makeDeck(): Initializes a standard deck of playing cards
 */
