@@ -36,7 +36,10 @@
 				<img id = "playerCard1" src = "./images/back.png" width = "175" height = "190" onclick="playCard(0);"/>
 				<img id = "playerCard2" src = "./images/back.png" width = "175" height = "190" onclick="playCard(1);"/>
 			</div>
-			<div id="deck">
+			<div id="deck" style="position:absolute;top:160px;left:290px;">
+				<img src="./images/back.png" width = "175" height="190" />
+				<div><h3><font color="red">Cards in Deck: </font></h3></div>
+				<div style="position:relative;left:70px;top:-20px;"><h3 id="cardsInDeck">15</h3></div>
 			</div>
 		</div>
 		<button type="button" class="btn btn-primary" id="gameLogButton" data-toggle="modal" data-target="#gameLog">View Game Log</button>

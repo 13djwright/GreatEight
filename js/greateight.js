@@ -33,6 +33,11 @@ function Game() {
 	//game needs a deck created and shuffled
 	this.deck = new Deck();
 	this.deck.makeDeck();
+
+
+	
+
+
 	this.deck.shuffle(3);
 	//deal off top card
 	this.deck.cardsUsed++;
@@ -58,6 +63,13 @@ function Game() {
 	else {
 		//bots go first.
 	}
+
+
+
+
+
+	//Initilize number of cards remaining on screen.
+	document.getElementById("cardsInDeck").innerHTML = this.deck.cardsLeft();
 	
 	var element1 = document.getElementById("playerCard1");
 	element1.setAttribute("src", this.players[0].currentCard.image);
@@ -91,7 +103,11 @@ function showCard( card ) {
 	img.height = card.height;
 	img.alt = card.alt;
 	
+
+
 	document.body.appendChild(img);
+
+
 }
 
 // Function for displaying the player's played cards
@@ -141,6 +157,9 @@ function displayPlayedCards( player, playerNum ) {
 		elem.setAttribute("alt", this.player.playedCards[i].alt);
 		dv.appendChild(elem);
 	}
+
+
+	
 }
 
 // Function that plays the bot's turn.
@@ -148,6 +167,7 @@ function displayPlayedCards( player, playerNum ) {
 function botTurn( bot ) {
 	// Bot draws a card
 	bot.newCard = game.deck.deal();
+
 	
 	// Select which card to play
 	var cardSelected = decideCard( bot.currentCard.value, bot.newCard.value );
@@ -451,6 +471,10 @@ function botLoop() {
 	game.players[0].newCard = game.deck.deal();
 	document.getElementById("playerCard2").src = game.players[0].newCard.image;
 	document.getElementById("playerCard2").style.visibility = "visible";
+
+
+	//This displays the updated number of cards in the deck
+	document.getElementById("cardsInDeck").innerHTML = game.deck.cardsLeft();
 }
 
 /*
