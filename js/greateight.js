@@ -106,7 +106,11 @@ function displayPlayedCards( playerNum ) {
 		playerName = "playerRight";
 		
 	for( var i = 0; i < player.playedCards.length; i++ ) {
+<<<<<<< HEAD
 		document.getElementById(playerName).appendChild(elem);
+=======
+		document.write("<img align = 'center' src = " + player.playedCards[i].image + "/>");
+>>>>>>> 686035a23d625ef3ba428d59e238ce7c4e0c0b62
 	}
 }
 
