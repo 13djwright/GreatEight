@@ -199,21 +199,12 @@ function playCard(cardNum) {
 	else {
 		console.log("something broken in playCard()");
 	}
-	//depending on the value of the card depends on what actions need to be made
-	console.log("cardNum: " + cardNum);
-	if((cardSelected.value === 5 || cardSelected.value === 6) && otherCard.value === 7) {
-		//cannot play a 5 or 6 when holding a 7.
-		console.log("cannot play a 5 or 6 when holding a 7");
-		addToGameLog("cannot play a 5 or 6 when holding a 7");
-		alert("cannot play a 5 or 6 when holding a 7");
-		return;
-	}
-	//get other input based on card.
+
 	var val = cardSelected.value;
 	var button = document.getElementById("playCardButton");
 	var alert = document.getElementById("alert");
 	alert.style.display = "none";
-
+	document.getElementById("playCardButton").disabled = false;
 	switch(val) {
 		case 1:
 			//FIXME: only have the options of players available to select from.
@@ -329,9 +320,14 @@ function playCard(cardNum) {
 			displayPlayedCards(null, 1);
 			game.players[0].isTargetable = false; //make sure this gets set back to to true at the beginning of next turn
 			break;
-		case 5:
+		case 6:
 			addTargetableButtons();
 			document.getElementById('cardGuess').style.display = "none";
+			if(otherCard.value === 7) {
+					alert.style.display = "block";
+					alert.innerHTML = "Cannot play a 6 when holding a 7. Must play 7.";
+					document.getElementById("playCardButton").disabled = true;
+			}
 			$('#userInput').modal();
 			button.addEventListener("click", function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
@@ -350,7 +346,7 @@ function playCard(cardNum) {
 					game.players[0].currentCard = game.players[selectedPerson-1].currentCard;
 					game.players[selectedPerson-1].currentCard = game.players[0].currentCard;
 					document.getElementById("playerCard1").src = game.players[0].currentCard.image;
-					addToGameLog("You played a 5 and switched your " + tempCard.value + "with Player " + selectedPerson + "\'s " + game.players[0].currentCard.value);
+					addToGameLog("You played a 6 and switched your " + tempCard.value + "with Player " + selectedPerson + "\'s " + game.players[0].currentCard.value);
 				}
 				else {
 					alert.style.display = "block";
@@ -358,12 +354,67 @@ function playCard(cardNum) {
 				}
 				}, false);
 			break;
-		case 6:
+		case 5:
+			addTargetableButtons();
+			document.getElementById('cardGuess').style.display = "none";
+			if(otherCard.value === 7) {
+					alert.style.display = "block";
+					alert.innerHTML = "Cannot play a 5 when holding a 7. Must play 7.";
+					document.getElementById("playCardButton").disabled = true;
+			}
+			$('#userInput').modal();
+			button.addEventListener("click", function() {
+				var selectedPerson = $('input[name=user]:radio:checked').val();
+				if(selectedPerson) {
+					var selectedPersonCard = game.players[selectedPerson-1].currentCard;
+					game.players[0].playedCards.push(cardSelected);
+					game.players[0].currentCard = otherCard;
+					//set the newCard element to nothing
+					game.players[0].newCard = null;
+					//update the display here (card played goes in box, move other card over, and hide card.
+					document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+					document.getElementById("playerCard1").src = otherCard.image;
+					$('#userInput').modal('hide');
+					displayPlayedCards(null, 1);
+					addToGameLog("You played a 5 and made Player " + selectedPerson + " discard and draw a new card. ");
+					if(game.players[selectedPerson-1].currentCard.value === 8) {
+						addToGameLog("Player " + selectedPerson + " discarded the 8! Nice choice Player 1!");
+					}
+					else if(game.deck.cardsLeft() > 0){
+						game.players[selectedPerson-1].currentCard = game.deck.deal();
+					}
+					else {
+						addToGameLog("No cards left to draw, so Player " + selectedPerson + " drew the left over card");
+						game.players[selectedPerson-1].currentCard = game.deck.cards[0];
+					}
+				}
+				else {
+					alert.style.display = "block";
+					alert.innerHTML = "Select a user";
+				}
+				}, false);
 			break;
 		case 7:
+			addToGameLog("You played a 7");
+			game.players[0].playedCards.push(cardSelected);
+			game.players[0].currentCard = otherCard;
+			//set the newCard element to nothing
+			game.players[0].newCard = null;
+			//update the display here (card played goes in box, move other card over, and hide card.
+			document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+			document.getElementById("playerCard1").src = otherCard.image;
+			displayPlayedCards(null, 1);
 			break;
 		case 8:
 			addToGameLog("You lost :(");
+			game.players[0].playedCards.push(cardSelected);
+			game.players[0].currentCard = otherCard;
+			//set the newCard element to nothing
+			game.players[0].newCard = null;
+			//update the display here (card played goes in box, move other card over, and hide card.
+			document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+			document.getElementById("playerCard1").src = otherCard.image;
+			displayPlayedCards(null, 1);
 			game.players[0].isTargetable = false;
 			game.players[0].canPlay = false;
 			//game.gameOver = true; //This might not be needed if we want to keep the game going between the bots
