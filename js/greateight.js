@@ -680,6 +680,8 @@ function chooseTarget(c, playerNum) {
 		break;
 	
 	case 5:
+	// cases 5 and 6 have the same targeting algorithm
+	case 6:
 		if(validTargets.length>1) {
 			target = validTargets[0];
 			for(i=1; i<validTargets.length; i++)
@@ -689,7 +691,6 @@ function chooseTarget(c, playerNum) {
 		}
 		break;
 	
-	case 6:
 		
 	}	
 	
