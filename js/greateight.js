@@ -58,17 +58,7 @@ function Game() {
 	else {
 		//bots go first.
 	}
-	
-	// TEST
-	this.players[0].playedCards.push(this.players[0].currentCard);
-	this.players[1].playedCards.push(this.players[1].currentCard);
-	this.players[2].playedCards.push(this.players[2].currentCard);
-	this.players[3].playedCards.push(this.players[3].currentCard);
-	displayPlayedCards(this.players[0], null);
-	displayPlayedCards(this.players[1], null);
-	displayPlayedCards(this.players[2], null);
-	displayPlayedCards(this.players[3], null);
-	// END TEST
+
 	
 	var element1 = document.getElementById("playerCard1");
 	element1.setAttribute("src", this.players[0].currentCard.image);
