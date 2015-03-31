@@ -594,7 +594,8 @@ function chooseTarget(c,playerNum) {
 }
 
 /*
-guessCard(): Called when a 1 is played by the AI to decide what card it will guess
+guessCard(target): Called when a 1 is played by the AI to decide what card it will guess
+	target is the player number chosen as the target
 */
 
 function guessCard(target) {
