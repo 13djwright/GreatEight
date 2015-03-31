@@ -161,14 +161,21 @@ function displayPlayedCards( player, playerNum ) {
 
 	
 }
+function botCardEffect(cardValue) {
 
+
+}
 // Function that plays the bot's turn.
 // FIXME: Needs expansion to actually do the card effects
 function botTurn( bot ) {
 	// Bot draws a card
 	bot.newCard = game.deck.deal();
+<<<<<<< HEAD
 
 	
+=======
+	bot.isTargetable = true;
+>>>>>>> ad82e280206e195e2b10a7b6341fd0a33c06619e
 	// Select which card to play
 	var cardSelected = decideCard( bot.currentCard.value, bot.newCard.value );
 	
@@ -185,11 +192,94 @@ function botTurn( bot ) {
 		selectedCard = bot.newCard;
 		otherCard = bot.currentCard;
 	}
+	var targetPlayer;
+	do {
+		targetPlayer = Math.floor(Math.random()*4);
+	} while(targetPlayer == bot.playerNum && game.players[targetPlayer].isTargetable && game.players[targetPlayer].canPlay);
 	
 	bot.playedCards.push(selectedCard);
 	bot.currentCard = otherCard;
+	
+	switch(selectedCard.value) {
+		case 1:
+			var targetCard = Math.floor(Math.random() * (9 - 2)) + 2;
+			addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value + " against Player " + (targetPlayer+1));
+			addToGameLog("Player " + (bot.playerNum+1) + " guessed Player " + (targetPlayer+1) + " had a " + targetCard);
+			if(game.players[targetPlayer].currentCard.value == targetCard) {
+				addToGameLog("Player " + (bot.playerNum+1) + "\'s guess was right!");
+				game.players[targetPlayer].canPlay = false;
+				game.players[targetPlayer].isTargetable = false;
+				game.players[targetPlayer].playedCards.push(game.players[targetPlayer].currentCard);
+				displayPlayedCards(null, targetPlayer+1);
+			}
+			else {
+				addToGameLog("Player " + (bot.playerNum+1) + "\'s guess was wrong");
+			}
+			break;
+		case 2:
+			addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value + " against Player " + (targetPlayer+1));
+			addToGameLog("Player " + (bot.playerNum+1) + " looked at Player " + (targetPlayer+1) + "\'s card");
+			break;
+		case 3:
+			addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value + " against Player " + (targetPlayer+1));
+			//win
+			if(bot.currentCard.value > game.players[targetPlayer].currentCard.value) {
+				addToGameLog("Player " + (bot.playerNum+1) + " beat Player " + (targetPlayer+1));
+				game.players[targetPlayer].canPlay = false;
+				game.players[targetPlayer].isTargetable = false;
+			}
+			//tie
+			else if(bot.currentCard.value == game.players[targetPlayer].currentCard.value) {
+				addToGameLog("Player " + (bot.playerNum+1) + " tied with Player " + (targetPlayer+1));
+			}
+			//lose
+			else if(bot.currentCard.value < game.players[targetPlayer].currentCard.value) {
+				addToGameLog("Player " + (bot.playerNum+1) + " lost against Player " + (targetPlayer+1));
+				bot.canPlay = false;
+				bot.isTargetable = false;
+			}
+			else {
+				console.log("something is broken in bot's case 3 of playing a card");
+			}
+			break;
+		case 4:
+			addToGameLog("Player " + (bot.playerNum+1) + " is not targetable for 1 turn");
+			bot.isTargetable = false;
+			break;
+		case 5:
+			if(game.players[targetPlayer].currentCard.value == 8) {
+				addToGameLog("Player " + (targetPlayer+1) + "discarded the 8! They are out of the game");
+				game.players[targetPlayer].canPlay = false;
+				game.players[targetPlayer].isTargetable = false;
+				game.players[targetPlayer].playedCards.push(game.players[targetPlayer].currentCard);
+				displayPlayedCards(null, targetPlayer);
+			}
+			else if(game.deck.cardsLeft > 0){
+				addToGameLog("Player " + (targetPlayer+1) + " discarded and redrew");
+				game.players[targetPlayer].currentCard = game.deck.deal();
+			}
+			else {
+				addToGameLog("Out of cards, Player " + (targetPlayer+1) + " draws discarded card from beginning of game.");
+				game.players[targetPlayer].current = game.deck.cards[0];
+			}
+			break;
+		case 6:
+			addToGameLog("Player " + bot.playerNum + " traded cards with Player " + (targetPlayer+1));
+			var temp = bot.currentCard;
+			bot.currentCard = game.players[targetPlayer].currentCard;
+			game.players[targetPlayer].currentCard = temp;
+			break;
+		case 7:
+			break;
+		case 8:
+			addToGameLog("Player " + bot.playerNum + " is out of the game.");
+			bot.canPlay = false;
+			bot.isTargetable = false;
+			break;
+	}
+	
+	
 	displayPlayedCards(bot, null);
-	addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value);
 
 }
 //returns a string of players targetable (might not be needed anymore)
@@ -469,6 +559,7 @@ function botLoop() {
 	}
 	//deal card to player.
 	game.players[0].newCard = game.deck.deal();
+	game.players[0].isTargetable = true;
 	document.getElementById("playerCard2").src = game.players[0].newCard.image;
 	document.getElementById("playerCard2").style.visibility = "visible";
 
@@ -617,6 +708,8 @@ function chooseTarget(c, playerNum) {
 		break;
 	
 	case 5:
+	// cases 5 and 6 have the same targeting algorithm
+	case 6:
 		if(validTargets.length>1) {
 			target = validTargets[0];
 			for(i=1; i<validTargets.length; i++)
@@ -626,7 +719,6 @@ function chooseTarget(c, playerNum) {
 		}
 		break;
 	
-	case 6:
 		
 	}	
 	
