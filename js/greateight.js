@@ -198,6 +198,14 @@ function playCard(cardNum) {
 					else {
 						//player was wrong
 					}
+					game.players[0].playedCards.push(cardSelected);
+					game.players[0].currentCard = otherCard;
+					//set the newCard element to nothing
+					game.players[0].newCard = null;
+					//update the display here (card played goes in box, move other card over, and hide card.
+					document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+					document.getElementById("playerCard1").src = otherCard.image;
+					//FIXME: make the played card show up in the box
 				}
 				//error something was not checked
 				else{
@@ -206,6 +214,8 @@ function playCard(cardNum) {
 					alert.style.display = "block";
 				}
 			}, false);
+			displayPlayedCards(game.players[0]);
+
 			break;
 		case 2:
 			var selectedPlayer = prompt("Enter the player you want to view their card: 2, 3, 4");
@@ -224,18 +234,7 @@ function playCard(cardNum) {
 			addToGameLog("You lost :(");
 			//
 			break;
-	}
-
-	//play the selected card and move the other card to the current card
-	game.players[0].playedCards.push(cardSelected);
-	game.players[0].currentCard = otherCard;
-	//set the newCard element to nothing
-	game.players[0].newCard = null;
-	//update the display here (card played goes in box, move other card over, and hide card.
-	document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
-	document.getElementById("playerCard1").src = otherCard.image;
-	//FIXME: make the played card show up in the box
-	
+	}	
 }
 
 /*
