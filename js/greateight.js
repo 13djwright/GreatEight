@@ -167,6 +167,8 @@ function botTurn( bot ) {
 	
 	bot.playedCards.push(selectedCard);
 	bot.currentCard = otherCard;
+	
+	displayPlayedCards(bot, null);
 }
 //returns a string of players targetable (might not be needed anymore)
 function targetablePlayers(params) {
