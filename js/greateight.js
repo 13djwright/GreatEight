@@ -94,6 +94,12 @@ function showCard( card ) {
 	document.body.appendChild(img);
 }
 
+function displayPlayedCards( player ) {
+	for( var i = 0; i < player.playedCards.length; i++ ) {
+		document.write("<img align = 'center' src = " + player.playedCards[i].image + "/>";
+	}
+}
+
 function targetablePlayers(params) {
 	var res = "";
 	for(var i = 0; i < params.length; i++) {
