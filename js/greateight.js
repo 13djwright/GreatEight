@@ -169,6 +169,7 @@ function botTurn( bot ) {
 	bot.playedCards.push(selectedCard);
 	bot.currentCard = otherCard;
 	displayPlayedCards(bot, null);
+	addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value);
 
 }
 //returns a string of players targetable (might not be needed anymore)
