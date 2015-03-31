@@ -278,6 +278,45 @@ function playCard(cardNum) {
 			
 			break;
 		case 3:
+			addTargetableButtons();
+			document.getElementById('cardGuess').style.display = "none";
+			$('#userInput').modal();
+			button.addEventListener("click", function() {
+				var selectedPerson = $('input[name=user]:radio:checked').val();
+				if(selectedPerson) {
+					var selectedPersonCard = game.players[selectedPerson-1].currentCard;
+					game.players[0].playedCards.push(cardSelected);
+					game.players[0].currentCard = otherCard;
+					//set the newCard element to nothing
+					game.players[0].newCard = null;
+					//update the display here (card played goes in box, move other card over, and hide card.
+					document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+					document.getElementById("playerCard1").src = otherCard.image;
+					$('#userInput').modal('hide');
+					displayPlayedCards(null, 1);
+					if(game.players[0].currentCard.value > game.players[selectedPerson-1].currentCard.value) {
+						addToGameLog("You beat Player " + selectedPerson + "\'s " + game.players[selectedPerson-1].currentCard.value + " with your " + game.players[0].currentCard.value);
+						game.players[selectedPerson-1].isTargetable = false;
+						game.players[selectedPerson-1].canPlay = false;
+					}
+					else if(game.players[0].currentCard.value === game.players[selectedPerson-1].currentCard.value) {
+						addToGameLog("You tied Player " + selectedPerson + "\'s " + game.players[selectedPerson-1].currentCard.value + " with your " + game.players[0].currentCard.value);
+					}
+					else if(game.players[0].currentCard.value < game.players[selectedPerson-1].currentCard.value){
+						addToGameLog("You lost against Player " + selectedPerson + "\'s " + game.players[selectedPerson-1].currentCard.value + " with your " + game.players[0].currentCard.value);
+						game.players[0].isTargetable = false;
+						game.players[1].canPlay = false;
+					}
+					else {
+						console.log("something is broken in case 3");
+					}
+				}
+				else {
+					alert.style.display = "block";
+					alert.innerHTML = "Select a user";
+				}
+			}, false);
+			break;
 		case 4:
 			addToGameLog("You are now protected for 1 turn.");
 			//FIXME: make player1 protected
@@ -455,6 +494,7 @@ function guessCard() {
 		if(playCounts[i-1]==0)
 			remGuesses.push(i);
 	guess = remGuesses[Math.floor(Math.random()*remGuesses.length)];
+	return guess;
 }
 
 /*
