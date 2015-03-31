@@ -122,7 +122,7 @@ function displayPlayedCards( player, playerNum ) {
 		displayName = "Player Four";
 	}
 		
-	var elem = document.createElement("img");
+	
 	var dv = document.getElementById(playerName);
 	// Remove any nodes in our div so we don't just keep adding images
 	while( dv.hasChildNodes() ) {
@@ -134,6 +134,7 @@ function displayPlayedCards( player, playerNum ) {
 	dv.appendChild(text);
 	// Draw all of our images
 	for( var i = 0; i < this.player.playedCards.length; i++ ) {
+		var elem = document.createElement("img");
 		elem.setAttribute("src", this.player.playedCards[i].image);
 		elem.setAttribute("height", this.player.playedCards[i].height/2.05);
 		elem.setAttribute("width", this.player.playedCards[i].width/2.05);
@@ -267,8 +268,8 @@ function playCard(cardNum) {
 					document.getElementById("playerCard1").src = otherCard.image;
 					$('#userInput').modal('hide');
 					displayPlayedCards(null, 1);
-					window.alert("Player " + selectedPerson + " is holding a " + selectedPersonCard.value);
-					addToGameLog("You played a 2. Player" + selectedPerson + " is holding a " + selectedPersonCard.value);
+					//window.alert("Player " + selectedPerson + " is holding a " + selectedPersonCard.value);
+					addToGameLog("You played a 2. Player " + selectedPerson + " is holding a " + selectedPersonCard.value);
 					botLoop();
 				}
 				else {
