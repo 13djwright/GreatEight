@@ -170,12 +170,8 @@ function botCardEffect(cardValue) {
 function botTurn( bot ) {
 	// Bot draws a card
 	bot.newCard = game.deck.deal();
-<<<<<<< HEAD
-
-	
-=======
 	bot.isTargetable = true;
->>>>>>> ad82e280206e195e2b10a7b6341fd0a33c06619e
+
 	// Select which card to play
 	var cardSelected = decideCard( bot.currentCard.value, bot.newCard.value );
 	
