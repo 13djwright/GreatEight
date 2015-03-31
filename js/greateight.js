@@ -94,8 +94,6 @@ function showCard( card ) {
 	document.body.appendChild(img);
 }
 
-
-// START IN PROGRESS BY STEVEN
 // Function for displaying the player's played cards
 // If calling this from Game, pass the actual player with playerNum=null
 // If calling this from OUTSIDE of Game, pass the playerNum with player=null
@@ -131,6 +129,7 @@ function displayPlayedCards( player, playerNum ) {
 		dv.removeChild(dv.lastChild);
 	}
 		
+	// Re-add the player name text
 	var text = document.createTextNode(displayName);
 	dv.appendChild(text);
 	// Draw all of our images
@@ -142,7 +141,6 @@ function displayPlayedCards( player, playerNum ) {
 		dv.appendChild(elem);
 	}
 }
-// END IN PROGRESS BY STEVEN
 
 function targetablePlayers(params) {
 	var res = "";
