@@ -93,9 +93,20 @@ function showCard( card ) {
 	document.body.appendChild(img);
 }
 
-function displayPlayedCards( player ) {
+function displayPlayedCards( playerNum ) {
+	this.player = game.players[playerNum];
+	var playerName;
+	if( playerNum === 1 )
+		playerName = "playerBottom";
+	else if( playerNum === 2 )
+		playerName = "playerLeft";
+	else if( playerNum === 3 )
+		playerName = "playerTop";
+	else if( playerNum === 4 )
+		playerName = "playerRight";
+		
 	for( var i = 0; i < player.playedCards.length; i++ ) {
-		document.write("<img align = 'center' src = " + player.playedCards[i].image + "/>";
+		document.getElementById(playerName).appendChild(elem);
 	}
 }
 
