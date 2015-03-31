@@ -101,7 +101,7 @@ function displayPlayedCards( player, playerNum ) {
 	if( playerNum === null )
 		this.player = player;
 	else if( player === null )
-		this.player = game.players[playerNum];
+		this.player = game.players[playerNum-1];
 	var playerNum = this.player.playerNum+1;
 	var playerName;
 	var displayName;
