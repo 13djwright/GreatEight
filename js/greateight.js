@@ -467,6 +467,7 @@ function guessCard() {
 		if(playCounts[i-1]==0)
 			remGuesses.push(i);
 	guess = remGuesses[Math.floor(Math.random()*remGuesses.length)];
+	return guess;
 }
 
 /*
