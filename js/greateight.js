@@ -108,7 +108,10 @@ function showCard( card ) {
 
 // START IN PROGRESS BY STEVEN
 // Function for displaying the player's played cards
-function displayPlayedCards( player ) {
+// If calling this from Game, pass the actual player with playerNum=NULL.
+// If calling this from OUTSIDE of Game, pass the playerNum with player=NULL;
+function displayPlayedCards( player, playerNum ) {
+	if( playerNum
 	this.player = player;
 	var playerNum = player.playerNum+1;
 	var playerName;
