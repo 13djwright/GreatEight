@@ -8,8 +8,8 @@ function Card(value) {
 }
 
 function Deck() {
-	this.cards = new Array();
-	this.cardsPlayed = new Array();
+	this.cards = [];
+	this.cardsPlayed = [];
 	this.cardsUsed = 0;
 	this.makeDeck = makeDeck;
 	this.shuffle = shuffleDeck;
@@ -21,7 +21,7 @@ function Player(isHuman, num) {
 	this.playerNum = num;
 	this.isHuman = isHuman;
 	this.canPlay = true;
-	this.playedCards = new Array(16);
+	this.playedCards = [];
 	this.isTargetable = true;
 	this.currentCard;
 	this.newCard;
