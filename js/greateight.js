@@ -59,6 +59,11 @@ function Game() {
 		//bots go first.
 	}
 	
+	// TEST
+	this.players[0].playedCards.push(this.players[0].newCard);
+	displayPlayedCards(1);
+	// END TEST
+	
 	var element1 = document.getElementById("playerCard1");
 	element1.setAttribute("src", this.players[0].currentCard.image);
 	element1 = document.getElementById("playerCard2");
@@ -67,6 +72,7 @@ function Game() {
 }
 
 // Function for displaying all of the player's cards
+// Card represents either the current card or new card
 function showPlayerCards( card ) {
 	this.card1 = game.players[0].currentCard;
 	this.card2 = game.players[0].newCard;
@@ -97,7 +103,7 @@ function showCard( card ) {
 // START IN PROGRESS BY STEVEN
 // Function for displaying the player's played cards
 function displayPlayedCards( playerNum ) {
-	this.player = game.players[playerNum];
+	//this.player = game.players[0];
 	var playerName;
 	if( playerNum === 1 )
 		playerName = "playerBottom";
@@ -110,12 +116,20 @@ function displayPlayedCards( playerNum ) {
 		
 	var elem = document.createElement("img");
 		
+	var dv = document.getElementById(playerName);
+		
+	// Remove any nodes in our div so we don't just keep adding images
+	while( dv.hasChildNodes() ) {
+		dv.removeChild(dv.lastChild);
+	}
+		
+	// Draw all of our images
 	for( var i = 0; i < player.playedCards.length; i++ ) {
 		elem.setAttribute("src", player.playedCards[i].image);
 		elem.setAttribute("height", player.playedCards[i].height/4);
 		elem.setAttribute("width", player.playedCards[i].width/4);
 		elem.setAttribute("alt", player.playedCards[i].alt);
-		document.getElementById(playerName).appendChild(elem);
+		dv.appendChild(elem);
 	}
 }
 // END IN PROGRESS BY STEVEN
