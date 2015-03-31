@@ -170,11 +170,11 @@ function playCard(cardNum) {
 		//cannot play a 5 or 6 when holding a 7.
 		console.log("cannot play a 5 or 6 when holding a 7");
 		addToGameLog("cannot play a 5 or 6 when holding a 7");
+		alert("cannot play a 5 or 6 when holding a 7");
 		return;
 	}
 	//get other input based on card.
 	var val = cardSelected.value;
-	var good = false;
 	switch(val) {
 		case 1:
 			//FIXME: only have the options of players available to select from.
@@ -182,7 +182,23 @@ function playCard(cardNum) {
 			$('#userInput').modal();
 			var button = document.getElementById("playCardButton");
 			button.addEventListener("click", function() {
-				alert("test");
+				var selectedPerson = $('input[name=user]:radio:checked').val();
+				var guess = $('input[name=guess]:radio:checked').val();
+				if(selectedPerson && guess) {
+					console.log("check user and guess");
+					if(game.players[selectedPerson].currentCard.value === guess) {
+						//player was right
+					}
+					else {
+						//player was wrong
+					}
+				}
+				//error something was not checked
+				else{
+					var alert = document.getElementById("alert");
+					alert.innerHTML = "Something was not selected!";
+					alert.style.display = "block";
+				}
 			}, false);
 			break;
 		case 2:
@@ -203,17 +219,16 @@ function playCard(cardNum) {
 			//
 			break;
 	}
-	/*
+
 	//play the selected card and move the other card to the current card
 	game.players[0].playedCards.push(cardSelected);
 	game.players[0].currentCard = otherCard;
 	//set the newCard element to nothing
 	game.players[0].newCard = null;
 	//update the display here (card played goes in box, move other card over, and hide card.
-	document.getElementById("playerCard2").style.display = "none"; //hide the new card
+	document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
 	document.getElementById("playerCard1").src = otherCard.image;
 	//FIXME: make the played card show up in the box
-	*/
 	
 }
 
