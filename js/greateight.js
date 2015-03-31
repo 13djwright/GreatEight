@@ -108,9 +108,14 @@ function displayPlayedCards( playerNum ) {
 	else if( playerNum === 4 )
 		playerName = "playerRight";
 		
+	var elem = document.createElement("img");
+		
 	for( var i = 0; i < player.playedCards.length; i++ ) {
+		elem.setAttribute("src", player.playedCards[i].image);
+		elem.setAttribute("height", player.playedCards[i].height/4);
+		elem.setAttribute("width", player.playedCards[i].width/4);
+		elem.setAttribute("alt", player.playedCards[i].alt);
 		document.getElementById(playerName).appendChild(elem);
-		document.write("<img align = 'center' src = " + player.playedCards[i].image + "/>");
 	}
 }
 // END IN PROGRESS BY STEVEN
