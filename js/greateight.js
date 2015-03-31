@@ -567,12 +567,15 @@ function chooseTarget(c,playerNum) {
 	if(validTargets.length===0)
 		return -1
 	
-	target = Math.floor(Math.random()*validTargets.length);
-	return target;
-	
-/*	switch(c) {
+	// default to random target
+	var target = Math.floor(Math.random()*validTargets.length);
+	switch(c) {
 	case 1:
-			
+		// a player that's played the countess only has a few likely cards in hand
+		for(i=0; i<validTargets.length; i++)
+			if(game.players[i].playedCards[playedCards.length-1].value===7)
+				target = i;
+		
 	
 	case 2:
 		
@@ -585,15 +588,17 @@ function chooseTarget(c,playerNum) {
 	
 	case 6:
 		
-	}
-*/
+	}	
+	
+	return target;
 }
 
 /*
-guessCard(): Called when a 1 is played by the AI to decide what card it will guess
+guessCard(target): Called when a 1 is played by the AI to decide what card it will guess
+	target is the player number chosen as the target
 */
 
-function guessCard() {
+function guessCard(target) {
 	var played = [];
 	for(i=0; i<4; i++) {
 		for(j=0; j<game.players[i].playedCards.length; j++) {
@@ -613,6 +618,14 @@ function guessCard() {
 	for(i=6; i<9; i++)
 		if(playCounts[i-1]==0)
 			remGuesses.push(i);
+			
+	//if the target was chosen because of playing the countess
+	if(game.players[target].playedCards[players[target].playedCards.length-1].value===7) {
+		i=0;
+		while(remGuesses[i]<5)
+			i++
+		remGuesses.slice(i, remGuesses.length);	
+	}
 	guess = remGuesses[Math.floor(Math.random()*remGuesses.length)];
 	return guess;
 }
