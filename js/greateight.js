@@ -103,7 +103,7 @@ function showCard( card ) {
 // START IN PROGRESS BY STEVEN
 // Function for displaying the player's played cards
 function displayPlayedCards( playerNum ) {
-	//this.player = game.players[0];
+	this.player = game.players[0];
 	var playerName;
 	if( playerNum === 1 )
 		playerName = "playerBottom";
