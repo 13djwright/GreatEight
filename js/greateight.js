@@ -255,7 +255,7 @@ decideCard(a, b): Bots' decision-making algorithm
 	Returns 0 to choose a, 1 to choose b
 */
 
-function decideAction(a, b) {
+function decideCard(a, b) {
 	if(a===8)
 		return 1;
 	if(b===8)
@@ -288,6 +288,50 @@ function decideAction(a, b) {
 		decision = 0;
 		
 	return decision ^ invert;
+}
+
+/*
+chooseTarget(c): selects an opposing player to target with a card whose effect requires a target
+	c is the value of the card
+	**INCOMPLETE**
+*/
+function chooseTarget(c) {
+	switch(c) {
+	case 1:
+		var played = [];
+		for(i=0; i<4; i++) {
+			for(j=0; j<game.players[i].playedCards.length; j++) {
+				played.push(game.players[i].playedCards[j]);
+			}
+		}
+		
+		playCounts = [0, 0, 0, 0, 0, 0, 0, 0]
+		for(i=0; i<played.length; i++) {
+			playCounts[played[i]-1]++;
+		}
+		
+		remGuesses = [];
+		for(i=2; i<6; i++)
+			if(playCounts[i-1]<2)
+				remGuesses.push(i);
+		for(i=6; i<9; i++)
+			if(playCounts[i-1]==0)
+				remGuesses.push(i);
+				
+		guess = remGuesses[Math.floor(Math.random()*remGuesses.length)];
+	
+	case 2:
+		
+	
+	case 3:
+		
+	
+	case 5:
+		
+	
+	case 6:
+		
+	}
 }
 
 /*
