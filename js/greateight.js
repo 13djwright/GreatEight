@@ -58,7 +58,6 @@ function Game() {
 	else {
 		//bots go first.
 	}
-
 	
 	var element1 = document.getElementById("playerCard1");
 	element1.setAttribute("src", this.players[0].currentCard.image);
@@ -104,26 +103,36 @@ function displayPlayedCards( player, playerNum ) {
 	if( playerNum === null )
 		this.player = player;
 	else if( player === null )
-		this.play = game.players[playerNum];
+		this.player = game.players[playerNum];
 	var playerNum = player.playerNum+1;
 	var playerName;
-	if( playerNum === 1 )
+	var displayName;
+	if( playerNum === 1 ) {
 		playerName = "playerBottom";
-	else if( playerNum === 2 )
+		displayName = "Player One";
+	}
+	else if( playerNum === 2 ) {
 		playerName = "playerLeft";
-	else if( playerNum === 3 )
+		displayName = "Player Two";
+	}
+	else if( playerNum === 3 ) {
 		playerName = "playerTop";
-	else if( playerNum === 4 )
+		displayName = "Player Three";
+	}
+	else if( playerNum === 4 ) {
 		playerName = "playerRight";
+		displayName = "Player Four";
+	}
 		
 	var elem = document.createElement("img");
 	var dv = document.getElementById(playerName);
-		console.log(playerName);
 	// Remove any nodes in our div so we don't just keep adding images
 	while( dv.hasChildNodes() ) {
 		dv.removeChild(dv.lastChild);
 	}
 		
+	var text = document.createTextNode(displayName);
+	dv.appendChild(text);
 	// Draw all of our images
 	for( var i = 0; i < player.playedCards.length; i++ ) {
 		elem.setAttribute("src", player.playedCards[i].image);
