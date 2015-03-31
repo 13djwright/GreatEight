@@ -339,10 +339,24 @@ function decideCard(a, b) {
 /*
 chooseTarget(c): selects an opposing player to target with a card whose effect requires a target
 	c is the value of the card
-	**INCOMPLETE**
+	playerNum is the number of the player playing the card (to avoid self-targeting)
+	
+	returns -1 if no legal targets
 */
-function chooseTarget(c) {
-	switch(c) {
+function chooseTarget(c,playerNum) {
+	validTargets = [];
+	for(i=0; i<game.players.length; i++) {
+		if(game.players[i].isTargetable)
+			validTargets.push(i)
+	}
+	
+	if(validTargets.length===0)
+		return -1
+	
+	target = Math.floor(Math.random()*validTargets.length);
+	return target;
+	
+/*	switch(c) {
 	case 1:
 			
 	
@@ -358,6 +372,7 @@ function chooseTarget(c) {
 	case 6:
 		
 	}
+*/
 }
 
 /*
