@@ -61,7 +61,7 @@ function Game() {
 	
 	// TEST
 	this.players[0].playedCards.push(this.players[0].newCard);
-	displayPlayedCards(1);
+	displayPlayedCards(this.players[0]);
 	// END TEST
 	
 	var element1 = document.getElementById("playerCard1");
@@ -102,8 +102,9 @@ function showCard( card ) {
 
 // START IN PROGRESS BY STEVEN
 // Function for displaying the player's played cards
-function displayPlayedCards( playerNum ) {
-	this.player = game.players[0];
+function displayPlayedCards( player ) {
+	this.player = player;
+	var playerNum = player.playerNum+1;
 	var playerName;
 	if( playerNum === 1 )
 		playerName = "playerBottom";
@@ -115,9 +116,8 @@ function displayPlayedCards( playerNum ) {
 		playerName = "playerRight";
 		
 	var elem = document.createElement("img");
-		
 	var dv = document.getElementById(playerName);
-		
+		console.log(playerName);
 	// Remove any nodes in our div so we don't just keep adding images
 	while( dv.hasChildNodes() ) {
 		dv.removeChild(dv.lastChild);
@@ -126,8 +126,8 @@ function displayPlayedCards( playerNum ) {
 	// Draw all of our images
 	for( var i = 0; i < player.playedCards.length; i++ ) {
 		elem.setAttribute("src", player.playedCards[i].image);
-		elem.setAttribute("height", player.playedCards[i].height/4);
-		elem.setAttribute("width", player.playedCards[i].width/4);
+		elem.setAttribute("height", player.playedCards[i].height*1.8);
+		elem.setAttribute("width", player.playedCards[i].width*1.8);
 		elem.setAttribute("alt", player.playedCards[i].alt);
 		dv.appendChild(elem);
 	}
