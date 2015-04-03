@@ -40,25 +40,29 @@ function Game() {
 	}
 	this.playersLeft = playersLeftInPlay(this.players);
 	console.log("playersLeft: " + this.playersLeft);
+	addToGameLog("playersLeft: " + this.playersLeft);
 	//choose a player to start with
 	this.activePlayer = Math.floor(Math.random()*4);
 	//deal each player their first card
 	for(var i = 0; i < 4; i++) {
-		console.log((i+this.activePlayer)%4);
+		//console.log((i+this.activePlayer)%4);
 		this.players[(i+this.activePlayer)%4].currentCard = this.deck.deal();
 	}
 	//now the game continues in a loop until it is over.
 	while(!this.gameOver) {
 		//each player takes a turn
+		addToGameLog("Player number " + (this.activePlayer%4+1) + "'s turn.");
 		this.players[this.activePlayer%4].newCard = this.deck.deal();
 		this.players[this.activePlayer%4].takeTurn();
 		this.activePlayer++;
 		console.log(this.deck.cardsLeft());
+		addToGameLog(this.deck.cardsLeft() + " cards left.");
 		if(this.deck.cardsLeft() == 0) {
 			this.gameOver = true;
 		}
 	}
 	console.log("gameover");
+	addToGameLog("Game over. ______ Wins!");
 	
 	//game is over determine winner
 }
@@ -66,13 +70,13 @@ function Game() {
 /*
 takeTurn(): each player must take a turn
 */
-function takeTurn(deck) {
+function takeTurn() {
 	
 	if(this.isHuman) {
 		//alert("Your Turn");
 	}
 	else {
-		
+		setTimeout(function(){}, 2000); //bot waits 2 seconds before playing
 	}
 }
 
