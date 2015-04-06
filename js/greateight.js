@@ -53,6 +53,7 @@ function Game() {
 		this.players[(i+this.activePlayer)%4].currentCard = this.deck.deal();
 	}
 	//now the game continues in a loop until it is over.
+	/*
 	while(!this.gameOver) {
 		//each player takes a turn
 		addToGameLog("Player number " + (this.activePlayer%4+1) + "'s turn.");
@@ -67,7 +68,7 @@ function Game() {
 	}
 	console.log("gameover");
 	addToGameLog("Game over. ______ Wins!");
-	
+	*/
 	//game is over determine winner
 }
 
