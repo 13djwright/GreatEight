@@ -562,8 +562,7 @@ function botLoop() {
 	document.getElementById("playerCard2").style.visibility = "visible";
 
 
-	//This displays the updated number of cards in the deck
-	document.getElementById("cardsInDeck").innerHTML = game.deck.cardsLeft();
+
 }
 
 /*
@@ -827,6 +826,10 @@ dealCard(): returns the card
 function dealCard() {
 	if (this.cardsLeft() > 0) {
 		this.cardsUsed++;
+
+		//This displays the updated number of cards in the deck
+	document.getElementById("cardsInDeck").innerHTML = game.deck.cardsLeft();
+
 		return this.cards[this.cardsUsed-1];
 	}
 	else {
