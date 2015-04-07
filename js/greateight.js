@@ -838,7 +838,13 @@ function dealCard() {
 }
 
 function getCardsLeft() {
-	return this.cards.length - this.cardsUsed
+	var left = this.cards.length - this.cardsUsed;
+	if( left < 0) {
+		return 0;
+	}
+	else {
+		return left;
+	}
 }
 
 /*
