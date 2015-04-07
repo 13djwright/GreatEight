@@ -43,7 +43,7 @@
 				<div style="position:relative;left:70px;top:-20px;"><h3 id="cardsInDeck">15</h3></div>
 			</div>
 		</div>
-		<button type="button" class="btn btn-primary" id="gameLogButton" data-toggle="modal" data-target="#gameLog">View Game Log</button>
+		<button type="button" class="btn btn-primary" id="gameLogButton" onclick="$('#gameLog').modal().draggable({handle: '.modal-header'});">View Game Log</button>
 			<div class="modal fade" id="gameLog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 				<div class="modal-content">
