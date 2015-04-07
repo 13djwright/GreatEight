@@ -565,20 +565,8 @@ function botLoop() {
 
 }
 
-/*
-takeTurn(): each player must take a turn
-*/
-function takeTurn() {
-	
-	if(this.isHuman) {
-		//alert("Your Turn");
-	}
-	else {
-		setTimeout(function(){}, 2000); //bot waits 2 seconds before playing
-	}
-}
-
 //Adds radio buttons for current players that are target-able
+//This is a DOM related function and does not need a unit test
 function addTargetableButtons() {
 //clear out the modal to be remade. each switch case makes the modal custom
 	var selectedUserForm = document.getElementById("selectedPlayer");
