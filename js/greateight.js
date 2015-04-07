@@ -348,7 +348,7 @@ function playCard(cardNum) {
 		case 2:
 			addTargetableButtons();
 			document.getElementById('cardGuess').style.display = "none";
-			$('#userInput').modal();
+			$('#userInput').modal().draggable({handle: ".modal-header"});
 			button.onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				if(selectedPerson) {
@@ -376,7 +376,7 @@ function playCard(cardNum) {
 		case 3:
 			addTargetableButtons();
 			document.getElementById('cardGuess').style.display = "none";
-			$('#userInput').modal();
+			$('#userInput').modal().draggable({handle: ".modal-header"});
 			button.onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				if(selectedPerson) {
@@ -435,7 +435,7 @@ function playCard(cardNum) {
 					alert.innerHTML = "Cannot play a 6 when holding a 7. Must play 7.";
 					document.getElementById("playCardButton").disabled = true;
 			}
-			$('#userInput').modal();
+			$('#userInput').modal().draggable({handle: ".modal-header"});
 			button.onclick =  function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				if(selectedPerson) {
@@ -470,7 +470,7 @@ function playCard(cardNum) {
 					alert.innerHTML = "Cannot play a 5 when holding a 7. Must play 7.";
 					document.getElementById("playCardButton").disabled = true;
 			}
-			$('#userInput').modal();
+			$('#userInput').modal().draggable({handle: ".modal-header"});
 			button.onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				if(selectedPerson) {
