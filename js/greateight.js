@@ -306,7 +306,7 @@ function playCard(cardNum) {
 		case 1:
 			addTargetableButtons();
 			document.getElementById("cardGuess").style.display = "block";
-			$('#userInput').modal();
+			$('#userInput').modal().draggable({handle: ".modal-header"});
 			document.getElementById("playCardButton").onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				var guess = $('input[name=guess]:radio:checked').val();
