@@ -1,3 +1,8 @@
+/*
+Card(value) - card object used to describe a card.
+value is used to determine which card it is (1-8).
+*/
+
 function Card(value) {
 	this.value = value;
 	this.image = "./images/"+value+".png";
@@ -6,6 +11,10 @@ function Card(value) {
 	this.alt = "Playing Card";
 	this.visible;
 }
+
+/*
+Deck() - object that holds all of the Card objects used in the game.
+*/
 
 function Deck() {
 	this.cards = [];
@@ -17,6 +26,12 @@ function Deck() {
 	this.cardsLeft = getCardsLeft;
 }
 
+/*
+Player(isHuman, num) - object that describes a player.
+isHuman is a boolean value to determine whether the player is human or a bot
+num is an integer value used to set the playerNum value
+*/
+
 function Player(isHuman, num) {
 	this.playerNum = num;
 	this.isHuman = isHuman;
@@ -25,19 +40,18 @@ function Player(isHuman, num) {
 	this.isTargetable = true;
 	this.currentCard;
 	this.newCard;
-	this.takeTurn = takeTurn;
 }
+
+/*
+Game() - contains the full game and should be set to variable game when intialized (seen in functions.js)
+This contains the deck, all players, and all set up needed to play
+*/
 
 function Game() {
 	this.gameOver = false;
 	//game needs a deck created and shuffled
 	this.deck = new Deck();
 	this.deck.makeDeck();
-
-
-	
-
-
 	this.deck.shuffle(3);
 	//deal off top card
 	this.deck.cardsUsed++;
@@ -64,10 +78,6 @@ function Game() {
 		//bots go first.
 	}
 
-
-
-
-
 	//Initilize number of cards remaining on screen.
 	document.getElementById("cardsInDeck").innerHTML = this.deck.cardsLeft();
 	
@@ -78,41 +88,29 @@ function Game() {
 	//here the game is set up and needs to be updated a player selects a card
 }
 
-// Function for displaying all of the player's cards
-// Card represents either the current card or new card
-function showPlayerCards( card ) {
-	this.card1 = game.players[0].currentCard;
-	this.card2 = game.players[0].newCard;
-	
-	var cardURL;
-	if( card = 1 )
-		cardURL = card1.image;
-	else if( card = 2 )
-		cardURL = card2.image;
-		
-	var element1 = document.getElementById("playerCard1");	
-	
-	element1.setAttribute("src", cardURL);
-}
+/*
+showCard(card) - card is a Card object
+Function for displaying a card to the DOM
+*/
 
-// Function for displaying a card through HTML
 function showCard( card ) {
 	var img = document.createElement("img");
 	img.src = card.image;
 	img.width = card.width;
 	img.height = card.height;
 	img.alt = card.alt;
-	
-
-
 	document.body.appendChild(img);
-
-
 }
 
-// Function for displaying the player's played cards
-// If calling this from Game, pass the actual player with playerNum=null
-// If calling this from OUTSIDE of Game, pass the playerNum with player=null
+/*
+displayCards(player, playerNum) -  Function for displaying the player's played cards
+
+If calling this from Game, pass the actual player with playerNum=null
+If calling this from OUTSIDE of Game, pass the playerNum with player=null
+
+This function deals with the DOM and does not need a unit test
+*/
+
 function displayPlayedCards( player, playerNum ) {
 	if( playerNum === null )
 		this.player = player;
@@ -137,8 +135,7 @@ function displayPlayedCards( player, playerNum ) {
 		playerName = "playerRight";
 		displayName = "Player Four";
 	}
-		
-	
+
 	var dv = document.getElementById(playerName);
 	// Remove any nodes in our div so we don't just keep adding images
 	while( dv.hasChildNodes() ) {
@@ -157,16 +154,15 @@ function displayPlayedCards( player, playerNum ) {
 		elem.setAttribute("alt", this.player.playedCards[i].alt);
 		dv.appendChild(elem);
 	}
-
-
-	
 }
-function botCardEffect(cardValue) {
 
+/*
+botTurn(bot) - bot is the bot Player.
+bot gets a card, is set to be targetable, and then decides what card to play.
+It then selects an appropriate target Player and plays the card.
+The card effect happens and the game shows the card the bot played
+*/
 
-}
-// Function that plays the bot's turn.
-// FIXME: Needs expansion to actually do the card effects
 function botTurn( bot ) {
 	// Bot draws a card
 	bot.newCard = game.deck.deal();
@@ -174,7 +170,6 @@ function botTurn( bot ) {
 	
 	// Select which card to play
 	var cardSelected = decideCard( bot.currentCard.value, bot.newCard.value );
-	
 	var selectedCard;
 	var otherCard;
 	
@@ -207,6 +202,7 @@ function botTurn( bot ) {
 				addToGameLog("Player " + (bot.playerNum+1) + "\'s guess was right!");
 				game.players[targetPlayer].canPlay = false;
 				game.players[targetPlayer].isTargetable = false;
+				//this should be more obvious that the player didn't play the card but was rather knocked out with it.
 				game.players[targetPlayer].playedCards.push(game.players[targetPlayer].currentCard);
 				displayPlayedCards(null, targetPlayer+1);
 			}
@@ -276,19 +272,7 @@ function botTurn( bot ) {
 			break;
 	}
 	
-	
 	displayPlayedCards(bot, null);
-
-}
-//returns a string of players targetable (might not be needed anymore)
-function targetablePlayers(params) {
-	var res = "";
-	for(var i = 0; i < params.length; i++) {
-		if(params[i].isTargetable) {
-			res += " " + (i+1);
-		}
-	}
-	return res;
 }
 
 /*
@@ -297,6 +281,7 @@ initial advance of the game "loop" where the player selects the card to play
 along with any additional information needed, and then gets handed off to the bots
 to play.
 */
+
 function playCard(cardNum) {
 	var cardSelected;
 	var otherCard;
@@ -466,7 +451,7 @@ function playCard(cardNum) {
 					displayPlayedCards(null, 1);
 					var tempCard = game.players[0].currentCard;
 					game.players[0].currentCard = game.players[selectedPerson-1].currentCard;
-					game.players[selectedPerson-1].currentCard = game.players[0].currentCard;
+					game.players[selectedPerson-1].currentCard = tempCard;
 					document.getElementById("playerCard1").src = game.players[0].currentCard.image;
 					addToGameLog("You played a 6 and switched your " + tempCard.value + "with Player " + selectedPerson + "\'s " + game.players[0].currentCard.value);
 					botLoop();
@@ -548,7 +533,10 @@ function playCard(cardNum) {
 	}	
 }
 
-//loop for bots to play
+/*
+botLoop() - loop for bots to play
+*/
+
 function botLoop() {
 	for(var i = 1; i < 4; i++) {
 		if(game.players[i].canPlay) {
@@ -561,12 +549,12 @@ function botLoop() {
 	document.getElementById("playerCard2").src = game.players[0].newCard.image;
 	document.getElementById("playerCard2").style.visibility = "visible";
 
-
-
 }
+/*
+addTargetableButtons() - Adds radio buttons for current players that are target-able
+						 This is a DOM related function and does not need a unit test
+*/
 
-//Adds radio buttons for current players that are target-able
-//This is a DOM related function and does not need a unit test
 function addTargetableButtons() {
 //clear out the modal to be remade. each switch case makes the modal custom
 	var selectedUserForm = document.getElementById("selectedPlayer");
@@ -658,6 +646,7 @@ chooseTarget(c): selects an opposing player to target with a card whose effect r
 	
 	returns -1 if no legal targets
 */
+
 function chooseTarget(c, playerNum) {
 	validTargets = [];
 	for(i=0; i<game.players.length; i++) {
@@ -754,6 +743,7 @@ function guessCard(target, self) {
 /*
 makeDeck(): Initializes a standard deck of playing cards
 */
+
 function makeDeck() {
 	this.cards = new Array(16);
 	for (var i = 0; i < 16; i++) {
@@ -795,6 +785,7 @@ function makeDeck() {
 /*
 shuffleDeck(n): Shuffles a deck of cards 'n' times
 */
+
 function shuffleDeck(n) {
 	var i, j, k;
 	var temp;
@@ -808,9 +799,11 @@ function shuffleDeck(n) {
 		}
 	}
 }
+
 /*
 dealCard(): returns the card 
 */
+
 function dealCard() {
 	if (this.cardsLeft() > 0) {
 		this.cardsUsed++;
@@ -838,6 +831,7 @@ function getCardsLeft() {
 /*
 playersLeftInPlay: Return the total amount of players left in play
 */
+
 function playersLeftInPlay(params) {
 	var count = 0; 
 	for(var i = 0; i < params.length; i++) {
