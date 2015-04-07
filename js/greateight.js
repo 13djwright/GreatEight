@@ -828,7 +828,7 @@ function dealCard() {
 		this.cardsUsed++;
 
 		//This displays the updated number of cards in the deck
-	document.getElementById("cardsInDeck").innerHTML = game.deck.cardsLeft();
+	document.getElementById("cardsInDeck").innerHTML = this.cardsLeft();
 
 		return this.cards[this.cardsUsed-1];
 	}
