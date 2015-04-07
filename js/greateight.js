@@ -534,22 +534,37 @@ function playCard(cardNum) {
 }
 
 /*
+doBotTurn - used to slow down the bots play
+i is the bot playerNum
+*/
+
+function doBotTurn(i) {
+	setTimeout(function() {
+			console.log(i);
+			if(game.players[i].canPlay) {
+				botTurn(game.players[i]);
+			}
+		}, i*2000);
+}
+
+/*
 botLoop() - loop for bots to play
 */
 
 function botLoop() {
 	for(var i = 1; i < 4; i++) {
-		if(game.players[i].canPlay) {
-			botTurn(game.players[i]);
-		}
+		doBotTurn(i);
 	}
-	//deal card to player.
-	game.players[0].newCard = game.deck.deal();
-	game.players[0].isTargetable = true;
-	document.getElementById("playerCard2").src = game.players[0].newCard.image;
-	document.getElementById("playerCard2").style.visibility = "visible";
-
+	
+	setTimeout(function() {
+		//deal card to player.
+		game.players[0].newCard = game.deck.deal();
+		game.players[0].isTargetable = true;
+		document.getElementById("playerCard2").src = game.players[0].newCard.image;
+		document.getElementById("playerCard2").style.visibility = "visible";
+	}, 8000);
 }
+
 /*
 addTargetableButtons() - Adds radio buttons for current players that are target-able
 						 This is a DOM related function and does not need a unit test
