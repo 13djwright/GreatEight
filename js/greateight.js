@@ -164,7 +164,7 @@ The card effect happens and the game shows the card the bot played
 */
 
 function botTurn( bot ) {
-	if(game.deck.cardsLeft() <== 0) {
+	if(game.deck.cardsLeft() <= 0) {
 		//There are no cards left to draw, determine winner
 		var winnerPlayerNum = -1;
 		var winnerCardValue = 0;
