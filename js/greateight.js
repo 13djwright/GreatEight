@@ -164,7 +164,19 @@ The card effect happens and the game shows the card the bot played
 */
 
 function botTurn( bot ) {
-	// Bot draws a card
+	if(game.deck.cardsLeft() <== 0) {
+		//There are no cards left to draw, determine winner
+		var winnerPlayerNum = -1;
+		var winnerCardValue = 0;
+		for(var i = 0; i < 4; i ++) {
+			if(game.players[i].canPlay) {
+				
+			}
+		}
+		
+		return;
+	}
+	//
 	bot.newCard = game.deck.deal();
 	bot.isTargetable = true;
 	
@@ -241,6 +253,7 @@ function botTurn( bot ) {
 			bot.isTargetable = false;
 			break;
 		case 5:
+			addToGameLog("Player " + (bot.playerNum+1) + " played a 5 against Player " + (targetPlayer+1));
 			if(game.players[targetPlayer].currentCard.value == 8) {
 				addToGameLog("Player " + (targetPlayer+1) + "discarded the 8! They are out of the game");
 				game.players[targetPlayer].canPlay = false;
@@ -248,7 +261,7 @@ function botTurn( bot ) {
 				game.players[targetPlayer].playedCards.push(game.players[targetPlayer].currentCard);
 				displayPlayedCards(null, targetPlayer);
 			}
-			else if(game.deck.cardsLeft > 0){
+			else if(game.deck.cardsLeft() > 0){
 				addToGameLog("Player " + (targetPlayer+1) + " discarded and redrew");
 				game.players[targetPlayer].currentCard = game.deck.deal();
 			}
@@ -557,11 +570,36 @@ function botLoop() {
 	}
 	
 	setTimeout(function() {
-		//deal card to player.
-		game.players[0].newCard = game.deck.deal();
-		game.players[0].isTargetable = true;
-		document.getElementById("playerCard2").src = game.players[0].newCard.image;
-		document.getElementById("playerCard2").style.visibility = "visible";
+		//check to see if any of the bots are in play
+		var botsInPlay = 0;
+		for(var i = 1; i < 4; i++) {
+			if(game.players[i].canPlay) {
+				botsInPlay++;
+			}
+		}
+		
+		//if player is out, game over
+		if(!game.players[0].canPlay) {
+			$('#endModalMessage').html("Game over. You lost.");
+			$('#endModal').modal().draggable({handle: '.modal-header'});
+			$('#playerCard1').removeAttr("onclick");
+			$('#playerCard2').removeAttr("onclick");
+		}
+		//otherwise see if the player wins by being the only person left, player wins
+		else if(botsInPlay === 0) {
+			$('#endModalMessage').html("Congratulations! You WIN!.");
+			$('#endModal').modal().draggable({handle: '.modal-header'});
+			$('#playerCard1').removeAttr("onclick");
+			$('#playerCard2').removeAttr("onclick");
+		}
+		//the game is still going
+		else {
+			//deal card to player.
+			game.players[0].newCard = game.deck.deal();
+			game.players[0].isTargetable = true;
+			document.getElementById("playerCard2").src = game.players[0].newCard.image;
+			document.getElementById("playerCard2").style.visibility = "visible";
+		}		
 	}, 8000);
 }
 
