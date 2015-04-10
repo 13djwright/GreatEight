@@ -286,6 +286,9 @@ function botTurn( bot ) {
 	}
 	
 	displayPlayedCards(bot, null);
+	if(targetPlayer == 0) {
+		$('#playerCard1').attr("src", game.players[0].currentCard.image);
+	}
 }
 
 /*
