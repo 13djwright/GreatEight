@@ -168,12 +168,24 @@ function botTurn( bot ) {
 		//There are no cards left to draw, determine winner
 		var winnerPlayerNum = -1;
 		var winnerCardValue = 0;
+		var message = "";
 		for(var i = 0; i < 4; i ++) {
 			if(game.players[i].canPlay) {
-				
+				if(game.players[i].currentCard.value > winnerCardValue) {
+					winnerCardValue = game.players[i].currentCard.value;
+					winnerPlayerNum = i;
+				}
 			}
 		}
 		
+		if(winnerPlayerNum != 0) {
+			message += "Game over. You lost. ";
+		}
+		message += "Player " + (winnerPlayerNum+1) + " wins with an " + winnerCardValue;
+		$('#endModalMessage').html(message);
+		$('#endModal').modal().draggable({handle: ".modal-header"});
+		$('#playerCard1').removeAttr("onclick");
+		$('#playerCard2').removeAttr("onclick");
 		return;
 	}
 	//
@@ -275,6 +287,10 @@ function botTurn( bot ) {
 			var temp = bot.currentCard;
 			bot.currentCard = game.players[targetPlayer].currentCard;
 			game.players[targetPlayer].currentCard = temp;
+			//if target player was human player, update their current card image
+			if(targetPlayer == 0) {
+				$('#playerCard1').setAttribute("src", game.players[0].currentCard.image);
+			}
 			break;
 		case 7:
 			break;
@@ -594,6 +610,31 @@ function botLoop() {
 			$('#endModal').modal().draggable({handle: '.modal-header'});
 			$('#playerCard1').removeAttr("onclick");
 			$('#playerCard2').removeAttr("onclick");
+		}
+		//if there are no cards left to draw, compare all cards
+		else if(game.deck.cardsLeft() <= 0) {
+			//There are no cards left to draw, determine winner
+			var winnerPlayerNum = -1;
+			var winnerCardValue = 0;
+			var message = "";
+			for(var i = 0; i < 4; i ++) {
+				if(game.players[i].canPlay) {
+					if(game.players[i].currentCard.value > winnerCardValue) {
+						winnerCardValue = game.players[i].currentCard.value;
+						winnerPlayerNum = i;
+					}
+				}
+			}
+			
+			if(winnerPlayerNum != 0) {
+				message += "Game over. You lost. ";
+			}
+			message += "Player " + (winnerPlayerNum+1) + " wins with an " + winnerCardValue;
+			$('#endModalMessage').html(message);
+			$('#endModal').modal().draggable({handle: ".modal-header"});
+			$('#playerCard1').removeAttr("onclick");
+			$('#playerCard2').removeAttr("onclick");
+			return;
 		}
 		//the game is still going
 		else {
