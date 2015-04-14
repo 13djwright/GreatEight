@@ -800,7 +800,7 @@ guessCard(target): Called when a 1 is played by the AI to decide what card it wi
 */
 
 function guessCard(target, self) {
-	var played = [self.currentCard];
+	var played = [self.currentCard.value];
 	for(i=0; i<4; i++) {
 		for(j=0; j<game.players[i].playedCards.length; j++) {
 			played.push(game.players[i].playedCards[j].value);
