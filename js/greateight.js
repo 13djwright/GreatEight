@@ -745,11 +745,11 @@ function chooseTarget(c, playerNum) {
 	validTargets = [];
 	for(i=0; i<game.players.length; i++) {
 		if(game.players[i].isTargetable && i!=playerNum)
-			validTargets.push(i)
+			validTargets.push(i);
 	}
 	
 	if(validTargets.length===0)
-		return -1
+		return -1;
 	
 	// default to random target
 	var target = validTargets[Math.floor(Math.random()*validTargets.length)];
