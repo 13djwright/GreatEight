@@ -20,6 +20,63 @@ QUnit.test( "Same card - decideCard", function( assert ) {
 	assert.equal( decideCard(1,1), 0, "Same card so first(0) one was chosen." );
 });
 
+QUnit.test("6 with value <4 - decideCard", function(assert) {
+	assert.expect(6);
+	assert.equal(decideCard(6,3), 0, "6 first 3 second, 6 is chosen (1/6)");
+	assert.equal(decideCard(6,2), 0, "6 first 2 second, 6 is chosen (2/6)");
+	assert.equal(decideCard(6,1), 0, "6 first 1 second, 6 is chosen (3/6)");
+	assert.equal(decideCard(3,6), 1, "3 first 6 second, 6 is chosen (4/6)");
+	assert.equal(decideCard(2,6), 1, "2 first 6 second, 6 is chosen (5/6)");
+	assert.equal(decideCard(1,6), 1, "1 first 6 second, 6 is chosen (6/6)");
+});
+
+QUnit.test("Specific case: 1 and 2 - decideCard", function(assert) {
+	assert.expect(2);
+	assert.equal(decideCard(2,1), 0, "2 first 1 second, 2(0) is chosen");
+	assert.equal(decideCard(1,2), 1, "1 first 2 second, 2(1) is chosen");
+});
+
+QUnit.test("General case - decideCard", function(assert) {
+	assert.expect(2);
+	assert.equal(decideCard(1,3), 0, "1 first 3 second, 1(0) is chosen");
+	assert.equal(decideCard(4,3), 1, "4 first 3 second, 3(1) is chosen");
+});
+
+/*
+	Tests for chooseTarget function
+ */
+
+QUnit.test("1 played - chooseTarget", function(assert) {
+	//various combinations of last plays from opponents
+});
+
+QUnit.test("3 played - chooseTarget", function(assert) {
+	//various combinations of last plays from opponents
+});
+
+QUnit.test("5 or 6 played - chooseTarget", function(assert) {
+	// various combinations of last plays from opponents
+});
+
+QUnit.test("One valid target - chooseTarget", function(assert) {
+	// all but one other player untargetable or eliminated
+});
+
+QUnit.test("No valid targets - chooseTarget", function(assert) {
+	// all other players untargetable or eliminated
+});
+
+
+/*
+	Tests for the guessCard function
+ */
+
+QUnit.test("All cases - guessCard", function(assert) {
+	// target just played 7
+	// target just played 2
+	// general case (all others)
+});
+
 /*
 	Austin, please implement the rest of the cases
 	for decideCard. These few examples will get you going.
