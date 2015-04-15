@@ -749,11 +749,11 @@ function chooseTarget(c, playerNum) {
 	validTargets = [];
 	for(i=0; i<game.players.length; i++) {
 		if(game.players[i].isTargetable && i!=playerNum)
-			validTargets.push(i)
+			validTargets.push(i);
 	}
 	
 	if(validTargets.length===0)
-		return -1
+		return -1;
 	
 	// default to random target
 	var target = validTargets[Math.floor(Math.random()*validTargets.length)];
@@ -804,10 +804,10 @@ guessCard(target): Called when a 1 is played by the AI to decide what card it wi
 */
 
 function guessCard(target, self) {
-	var played = [self.currentCard];
+	var played = [self.currentCard.value];
 	for(i=0; i<4; i++) {
 		for(j=0; j<game.players[i].playedCards.length; j++) {
-			played.push(game.players[i].playedCards[j]);
+			played.push(game.players[i].playedCards[j].value);
 		}
 	}
 
