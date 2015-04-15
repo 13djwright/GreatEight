@@ -46,23 +46,37 @@ QUnit.test("General case - decideCard", function(assert) {
 	Tests for chooseTarget function
  */
 
-QUnit.test("1 played - chooseTarget", function(assert) {
-	//various combinations of last plays from opponents
+QUnit.test("1 played (Most recent plays {3,5,1,7}) - chooseTarget", function(assert) {
+/*	var game = new Game();
+	game.players[0].playedCards.push(new Card(3));
+	game.players[1].playedCards.push(new Card(5));
+	game.players[2].playedCards.push(new Card(1));
+	game.players[3].playedCards.push(new Card(7));
+*/
+	assert.expect(0);
+
+//	assert.expect(1);
+//	assert.equal(chooseTarget(1,0), 3, "Player 0 plays, chooses player 3");
+
 });
 
 QUnit.test("3 played - chooseTarget", function(assert) {
+	assert.expect(0);
 	//various combinations of last plays from opponents
 });
 
 QUnit.test("5 or 6 played - chooseTarget", function(assert) {
+	assert.expect(0);
 	// various combinations of last plays from opponents
 });
 
 QUnit.test("One valid target - chooseTarget", function(assert) {
+	assert.expect(0);
 	// all but one other player untargetable or eliminated
 });
 
 QUnit.test("No valid targets - chooseTarget", function(assert) {
+	assert.expect(0);
 	// all other players untargetable or eliminated
 });
 
@@ -75,6 +89,7 @@ QUnit.test("All cases - guessCard", function(assert) {
 	// target just played 7
 	// target just played 2
 	// general case (all others)
+	assert.expect(0);
 });
 
 /*
