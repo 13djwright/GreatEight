@@ -208,18 +208,19 @@ function botTurn( bot ) {
 		otherCard = bot.currentCard;
 	}
 	//FIXME: What if there are no targetable players (someone played a 4) but still more than one person in the game. 
-	var targetPlayer = Math.floor(Math.random()*4);
-	//while bot.playerNum equals targetPlayer || !game.players[targetPlayer].isTargetable 
-	while(targetPlayer == bot.playerNum ||	!game.players[targetPlayer].isTargetable || !game.players[targetPlayer].canPlay) {
-		targetPlayer = Math.floor(Math.random()*4);
+	var targetPlayer = chooseTarget(selectedCard.value, bot.playerNum); //Math.floor(Math.random()*4);
+	if(targetPlayer == -1) {
+		addToGameLog("Player " + (bot.playerNum+1) + " has no oppenents to target. The card " + selectedCard.value + " is thrown away.");
+		bot.playedCards.push(selectedCard);
+		bot.currentCard = otherCard;
+		return;
 	}
-	
 	bot.playedCards.push(selectedCard);
 	bot.currentCard = otherCard;
 	
 	switch(selectedCard.value) {
 		case 1:
-			var targetCard = Math.floor(Math.random() * (9 - 2)) + 2;
+			var targetCard = guessCard(game.players[targetPlayer], bot);
 			addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value + " against Player " + (targetPlayer+1));
 			addToGameLog("Player " + (bot.playerNum+1) + " guessed Player " + (targetPlayer+1) + " had a " + targetCard);
 			if(game.players[targetPlayer].currentCard.value == targetCard) {
