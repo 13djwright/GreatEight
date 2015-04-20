@@ -7,8 +7,8 @@ function addToGameLog(text) {
 	},{
 		type: 'info',
 		placement: {
-			from: 'top',
-			align: 'center'
+			from: 'bottom',
+			align: 'left'
 		},
 		delay: 5000,
 		allow_dismiss: true
