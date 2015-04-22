@@ -226,7 +226,7 @@ function botTurn( bot ) {
 	
 	switch(selectedCard.value) {
 		case 1:
-			var targetCard = Math.floor(Math.random() * (9 - 2)) + 2; //this should be the guess card function, but it needs more testing to function correctly
+			var targetCard = guessCard(targetPlayer, bot); //Math.floor(Math.random() * (9 - 2)) + 2; //this should be the guess card function, but it needs more testing to function correctly
 			addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value + " against Player " + (targetPlayer+1));
 			addToGameLog("Player " + (bot.playerNum+1) + " guessed Player " + (targetPlayer+1) + " had a " + targetCard);
 			if(game.players[targetPlayer].currentCard.value == targetCard) {
@@ -235,6 +235,9 @@ function botTurn( bot ) {
 				game.players[targetPlayer].isTargetable = false;
 				//this should be more obvious that the player didn't play the card but was rather knocked out with it.
 				game.players[targetPlayer].playedCards.push(game.players[targetPlayer].currentCard);
+				if(targetPlayer == 0) {
+					$('#playerCard1').attr("src", "");
+				}
 				displayPlayedCards(null, targetPlayer+1);
 			}
 			else {
@@ -780,10 +783,15 @@ function chooseTarget(c, playerNum) {
 	case 3:
 		if(validTargets.length>1) {
 			target = validTargets[0];
-			for(i=1; i<validTargets.length; i++)
-				if(game.players[validTargets[i]].playedCards[game.players[validTargets[i]].playedCards.length-1]<
-				  game.players[validTargets[target]].playedCards[game.players[validTargets[target]].playedCards.length-1])
-					target = i;
+			for(i=1; i<validTargets.length; i++) {
+				//first check if there are any played cards at all, if not, stick with current target.
+				if(game.players[validTargets[i]].playedCards.length && game.players[validTargets[target]].playedCards.length) {
+					if(game.players[validTargets[i]].playedCards[game.players[validTargets[i]].playedCards.length-1].value<
+					  game.players[validTargets[target]].playedCards[game.players[validTargets[target]].playedCards.length-1].value) {
+						target = i;
+					}
+				}
+			}
 		}
 		break;
 	
@@ -833,11 +841,19 @@ function guessCard(target, self) {
 			remGuesses.push(i);
 	
 	//we assume the target played their lower card
-	var stop = target.playedCards[playedCards.length];
-	
+	var stop;
+	if(game.players[target].playedCards.length) {
+		stop = game.players[target].playedCards[game.players[target].playedCards.length-1];
+	}
+	else {
+		stop = 2;
+	}
 	//unless it was the countess
-	if(game.players[target].playedCards[players[target].playedCards.length-1].value===7)
-		stop = 5;
+	//check if the target player has played any cards first.
+	if(game.players[target].playedCards.length) {
+		if(game.players[target].playedCards[game.players[target].playedCards.length-1].value===7)
+			stop = 5;
+	}
 	i=0;
 	while(remGuesses[i]<stop)
 		i++
@@ -912,11 +928,9 @@ dealCard(): returns the card
 
 function dealCard() {
 	if (this.cardsLeft() > 0) {
-		this.cardsUsed++;
-
 		//This displays the updated number of cards in the deck
-	document.getElementById("cardsInDeck").innerHTML = this.cardsLeft();
-
+		document.getElementById("cardsInDeck").innerHTML = this.cardsLeft();
+		this.cardsUsed++;
 		return this.cards[this.cardsUsed-1];
 	}
 	else {
