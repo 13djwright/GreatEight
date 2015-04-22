@@ -208,19 +208,25 @@ function botTurn( bot ) {
 		otherCard = bot.currentCard;
 	}
 	//FIXME: What if there are no targetable players (someone played a 4) but still more than one person in the game. 
-	var targetPlayer = chooseTarget(selectedCard.value, bot.playerNum); //Math.floor(Math.random()*4);
+	var targetPlayer = chooseTarget(selectedCard.value, bot.playerNum);
 	if(targetPlayer == -1) {
-		addToGameLog("Player " + (bot.playerNum+1) + " has no oppenents to target. The card " + selectedCard.value + " is thrown away.");
+		addToGameLog("Player " + (bot.playerNum+1) + " has no oppenents to choose from. The card " + selectedCard.value + " is thrown away.");
 		bot.playedCards.push(selectedCard);
 		bot.currentCard = otherCard;
-		return;
+		displayPlayedCards(bot, null);
+		return;		
 	}
+
+	while(targetPlayer == bot.playerNum ||	!game.players[targetPlayer].isTargetable || !game.players[targetPlayer].canPlay) {
+		targetPlayer = Math.floor(Math.random()*4);
+	}
+	
 	bot.playedCards.push(selectedCard);
 	bot.currentCard = otherCard;
 	
 	switch(selectedCard.value) {
 		case 1:
-			var targetCard = guessCard(game.players[targetPlayer], bot);
+			var targetCard = Math.floor(Math.random() * (9 - 2)) + 2; //this should be the guess card function, but it needs more testing to function correctly
 			addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value + " against Player " + (targetPlayer+1));
 			addToGameLog("Player " + (bot.playerNum+1) + " guessed Player " + (targetPlayer+1) + " had a " + targetCard);
 			if(game.players[targetPlayer].currentCard.value == targetCard) {
@@ -290,7 +296,7 @@ function botTurn( bot ) {
 			game.players[targetPlayer].currentCard = temp;
 			//if target player was human player, update their current card image
 			if(targetPlayer == 0) {
-				$('#playerCard1').setAttribute("src", game.players[0].currentCard.image);
+				$('#playerCard1').attr("src", game.players[0].currentCard.image);
 			}
 			break;
 		case 7:
@@ -303,9 +309,6 @@ function botTurn( bot ) {
 	}
 	
 	displayPlayedCards(bot, null);
-	if(targetPlayer == 0) {
-		$('#playerCard1').attr("src", game.players[0].currentCard.image);
-	}
 }
 
 /*
@@ -760,9 +763,14 @@ function chooseTarget(c, playerNum) {
 	switch(c) {
 	case 1:
 		// a player that's played the countess only has a few likely cards in hand
-		for(i=0; i<validTargets.length; i++)
-			if(game.players[validTargets[i]].playedCards[game.players[validTargets[i]].playedCards.length-1].value===7)
-				target = i;
+		for(i=0; i<validTargets.length; i++) {
+			if(game.players[validTargets[i]].playedCards.length) {
+				if(game.players[validTargets[i]].playedCards[game.players[validTargets[i]].playedCards.length-1].value===7) {
+					target = i;
+				}
+			}
+		}
+		//if no one has played a 7, use the random target
 		break;
 	
 	case 2:
