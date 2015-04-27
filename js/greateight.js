@@ -227,10 +227,14 @@ function botTurn( bot ) {
 	switch(selectedCard.value) {
 		case 1:
 			var targetCard = guessCard(targetPlayer, bot); //Math.floor(Math.random() * (9 - 2)) + 2; //this should be the guess card function, but it needs more testing to function correctly
-			addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value + " against Player " + (targetPlayer+1));
-			addToGameLog("Player " + (bot.playerNum+1) + " guessed Player " + (targetPlayer+1) + " had a " + targetCard);
+			var message = "";
+			
+			//addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value + " against Player " + (targetPlayer+1));
+			//addToGameLog("Player " + (bot.playerNum+1) + " guessed Player " + (targetPlayer+1) + " had a " + targetCard);
+			message += "Player " + (bot.playerNum+1) + " guessed Player " + (targetPlayer+1) + " had a " + targetCard + " and was ";
 			if(game.players[targetPlayer].currentCard.value == targetCard) {
-				addToGameLog("Player " + (bot.playerNum+1) + "\'s guess was right!");
+				//addToGameLog("Player " + (bot.playerNum+1) + "\'s guess was right!");
+				message += "right!";
 				game.players[targetPlayer].canPlay = false;
 				game.players[targetPlayer].isTargetable = false;
 				//this should be more obvious that the player didn't play the card but was rather knocked out with it.
@@ -241,18 +245,25 @@ function botTurn( bot ) {
 				displayPlayedCards(null, targetPlayer+1);
 			}
 			else {
-				addToGameLog("Player " + (bot.playerNum+1) + "\'s guess was wrong");
+				message += "wrong.";
+				//addToGameLog("Player " + (bot.playerNum+1) + "\'s guess was wrong");
 			}
+			addToGameLog(message);
 			break;
 		case 2:
-			addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value + " against Player " + (targetPlayer+1));
+			//addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value + " against Player " + (targetPlayer+1));
 			addToGameLog("Player " + (bot.playerNum+1) + " looked at Player " + (targetPlayer+1) + "\'s card");
 			break;
 		case 3:
-			addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value + " against Player " + (targetPlayer+1));
+			//addToGameLog("Player " + (bot.playerNum+1) + " played a " + selectedCard.value + " against Player " + (targetPlayer+1));
 			//win
 			if(bot.currentCard.value > game.players[targetPlayer].currentCard.value) {
-				addToGameLog("Player " + (bot.playerNum+1) + " beat Player " + (targetPlayer+1));
+				if(targetPlayer == 0) {
+					addToGameLog("Player " + (bot.playerNum+1) + " beat your " + game.targetPlayer.currentCard.value + " with a " + bot.currentCard.value);
+				}
+				else {
+				    addToGameLog("Player " + (bot.playerNum+1) + " beat Player " + (targetPlayer+1));
+				}
 				game.players[targetPlayer].canPlay = false;
 				game.players[targetPlayer].isTargetable = false;
 			}
@@ -281,6 +292,7 @@ function botTurn( bot ) {
 				game.players[targetPlayer].canPlay = false;
 				game.players[targetPlayer].isTargetable = false;
 				game.players[targetPlayer].playedCards.push(game.players[targetPlayer].currentCard);
+				//FIXME: is this correct use of displayPlayedCards?
 				displayPlayedCards(null, targetPlayer);
 			}
 			else if(game.deck.cardsLeft() > 0){
@@ -299,13 +311,15 @@ function botTurn( bot ) {
 			game.players[targetPlayer].currentCard = temp;
 			//if target player was human player, update their current card image
 			if(targetPlayer == 0) {
+				addToGameLog("Your " + bot.currentCard.value + " was traded with Player " + (bot.playerNum+1) + "'s " + game.players[0].currentCard.value);
 				$('#playerCard1').attr("src", game.players[0].currentCard.image);
 			}
 			break;
 		case 7:
+		    addToGameLog("Player " + (bot.playerNum+1) + " played a 7.");
 			break;
 		case 8:
-			addToGameLog("Player " + (bot.playerNum+1) + " is out of the game.");
+			addToGameLog("Player " + (bot.playerNum+1) + " is out of the game from playing an 8.");
 			bot.canPlay = false;
 			bot.isTargetable = false;
 			break;
@@ -343,6 +357,7 @@ function playCard(cardNum) {
 	document.getElementById("playCardButton").disabled = false;
 	switch(val) {
 		case 1:
+		    //FIXME: what if there are no targets left?
 			addTargetableButtons();
 			document.getElementById("cardGuess").style.display = "block";
 			$('#userInput').modal().draggable({handle: ".modal-header"});
@@ -583,7 +598,7 @@ function doBotTurn(i) {
 			if(game.players[i].canPlay) {
 				botTurn(game.players[i]);
 			}
-		}, i*2000);
+		}, i*3000);
 }
 
 /*
@@ -651,7 +666,7 @@ function botLoop() {
 			document.getElementById("playerCard2").src = game.players[0].newCard.image;
 			document.getElementById("playerCard2").style.visibility = "visible";
 		}		
-	}, 8000);
+	}, 10000);
 }
 
 /*
@@ -665,7 +680,7 @@ function addTargetableButtons() {
 	while(selectedUserForm.firstChild) {
 		selectedUserForm.removeChild(selectedUserForm.firstChild);
 	}
-	
+	var count = 0;
 	var breakNode = document.createElement("br");
 	if(game.players[1].isTargetable) {
 		var player2 = document.createElement("input");
@@ -677,6 +692,7 @@ function addTargetableButtons() {
 		word.innerHTML = "2";
 		selectedUserForm.appendChild(word);
 		selectedUserForm.appendChild(breakNode);
+		count++;
 	}
 	if(game.players[2].isTargetable) {
 		var player3 = document.createElement("input");
@@ -688,6 +704,7 @@ function addTargetableButtons() {
 		word.innerHTML = "3";
 		selectedUserForm.appendChild(word);
 		selectedUserForm.appendChild(breakNode);
+		count ++;
 	}
 	if(game.players[3].isTargetable) {
 		var player4 = document.createElement("input");
@@ -697,6 +714,18 @@ function addTargetableButtons() {
 		selectedUserForm.appendChild(player4);
 		var word = document.createElement("p");
 		word.innerHTML = "4";
+		selectedUserForm.appendChild(word);
+		selectedUserForm.appendChild(breakNode);
+		count++;
+	}
+	//FIXME: No players targetable, somehow set up throw away card.
+	if(count == 0) {	
+		var player0 = document.createElement("input");
+		player0.setAttribute("type", "radio");
+		player0.value = -1;
+		player0.name = "user"
+		selectedUserForm.appendChild(player0);
+		word.innerHTML = "No other players targetable, throw this card away";
 		selectedUserForm.appendChild(word);
 		selectedUserForm.appendChild(breakNode);
 	}
