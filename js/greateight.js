@@ -241,6 +241,7 @@ function botTurn( bot ) {
 				game.players[targetPlayer].playedCards.push(game.players[targetPlayer].currentCard);
 				if(targetPlayer == 0) {
 					$('#playerCard1').attr("src", "");
+					$('#playerCard1').hide();
 				}
 				displayPlayedCards(null, targetPlayer+1);
 			}
@@ -259,7 +260,7 @@ function botTurn( bot ) {
 			//win
 			if(bot.currentCard.value > game.players[targetPlayer].currentCard.value) {
 				if(targetPlayer == 0) {
-					addToGameLog("Player " + (bot.playerNum+1) + " beat your " + game.targetPlayer.currentCard.value + " with a " + bot.currentCard.value);
+					addToGameLog("Player " + (bot.playerNum+1) + " beat your " + game.players[targetPlayer].currentCard.value + " with a " + bot.currentCard.value);
 				}
 				else {
 				    addToGameLog("Player " + (bot.playerNum+1) + " beat Player " + (targetPlayer+1));
@@ -288,12 +289,11 @@ function botTurn( bot ) {
 		case 5:
 			addToGameLog("Player " + (bot.playerNum+1) + " played a 5 against Player " + (targetPlayer+1));
 			if(game.players[targetPlayer].currentCard.value == 8) {
-				addToGameLog("Player " + (targetPlayer+1) + "discarded the 8! They are out of the game");
+				addToGameLog("Player " + (targetPlayer+1) + " discarded the 8! They are out of the game.");
 				game.players[targetPlayer].canPlay = false;
 				game.players[targetPlayer].isTargetable = false;
 				game.players[targetPlayer].playedCards.push(game.players[targetPlayer].currentCard);
-				//FIXME: is this correct use of displayPlayedCards?
-				displayPlayedCards(null, targetPlayer);
+				displayPlayedCards(null, (targetPlayer+1));
 			}
 			else if(game.deck.cardsLeft() > 0){
 				addToGameLog("Player " + (targetPlayer+1) + " discarded and redrew");
@@ -455,7 +455,7 @@ function playCard(cardNum) {
 					else if(game.players[0].currentCard.value < game.players[selectedPerson-1].currentCard.value){
 						addToGameLog("You lost against Player " + selectedPerson + "\'s " + game.players[selectedPerson-1].currentCard.value + " with your " + game.players[0].currentCard.value);
 						game.players[0].isTargetable = false;
-						game.players[1].canPlay = false;
+						game.players[0].canPlay = false;
 					}
 					else {
 						console.log("something is broken in case 3");
@@ -544,6 +544,7 @@ function playCard(cardNum) {
 					}
 					else if(game.deck.cardsLeft() > 0){
 						game.players[selectedPerson-1].currentCard = game.deck.deal();
+						
 					}
 					else {
 						addToGameLog("No cards left to draw, so Player " + selectedPerson + " drew the left over card");
@@ -594,7 +595,7 @@ i is the bot playerNum
 
 function doBotTurn(i) {
 	setTimeout(function() {
-			console.log(i);
+			//console.log(i);
 			if(game.players[i].canPlay) {
 				botTurn(game.players[i]);
 			}
@@ -725,6 +726,7 @@ function addTargetableButtons() {
 		player0.value = -1;
 		player0.name = "user"
 		selectedUserForm.appendChild(player0);
+		var word = document.createElement("p");
 		word.innerHTML = "No other players targetable, throw this card away";
 		selectedUserForm.appendChild(word);
 		selectedUserForm.appendChild(breakNode);
@@ -957,9 +959,9 @@ dealCard(): returns the card
 
 function dealCard() {
 	if (this.cardsLeft() > 0) {
+		this.cardsUsed++;
 		//This displays the updated number of cards in the deck
 		document.getElementById("cardsInDeck").innerHTML = this.cardsLeft();
-		this.cardsUsed++;
 		return this.cards[this.cardsUsed-1];
 	}
 	else {
