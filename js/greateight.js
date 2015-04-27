@@ -216,7 +216,7 @@ function botTurn( bot ) {
 		displayPlayedCards(bot, null);
 		return;		
 	}
-
+	//this should not run, however, just in case it is left here.
 	while(targetPlayer == bot.playerNum ||	!game.players[targetPlayer].isTargetable || !game.players[targetPlayer].canPlay) {
 		targetPlayer = Math.floor(Math.random()*4);
 	}
@@ -294,14 +294,27 @@ function botTurn( bot ) {
 				game.players[targetPlayer].isTargetable = false;
 				game.players[targetPlayer].playedCards.push(game.players[targetPlayer].currentCard);
 				displayPlayedCards(null, (targetPlayer+1));
+				if(targetPlayer == 0) {
+					$("playerCard1").hide();
+				}
 			}
 			else if(game.deck.cardsLeft() > 0){
-				addToGameLog("Player " + (targetPlayer+1) + " discarded and redrew");
+				var discardedCardValue = game.players[targetPlayer].currentCard.value;
 				game.players[targetPlayer].currentCard = game.deck.deal();
+				if(targetPlayer == 0) {
+					addToGameLog("You had you discard your " + discardedCardValue + " and drew a " + game.players[targetPlayer].currentCard.value);
+				}
+				else {
+					addToGameLog("Player " + (targetPlayer+1) + " discarded and redrew");
+				}
 			}
 			else {
 				addToGameLog("Out of cards, Player " + (targetPlayer+1) + " draws discarded card from beginning of game.");
 				game.players[targetPlayer].current = game.deck.cards[0];
+			}
+			
+			if(targetPlayer == 0 && game.players[0].canPlay) {
+				$('#playerCard1').attr("src", game.players[0].currentCard.image);
 			}
 			break;
 		case 6:
@@ -507,7 +520,7 @@ function playCard(cardNum) {
 					game.players[0].currentCard = game.players[selectedPerson-1].currentCard;
 					game.players[selectedPerson-1].currentCard = tempCard;
 					document.getElementById("playerCard1").src = game.players[0].currentCard.image;
-					addToGameLog("You played a 6 and switched your " + tempCard.value + "with Player " + selectedPerson + "\'s " + game.players[0].currentCard.value);
+					addToGameLog("You played a 6 and switched your " + tempCard.value + " with Player " + selectedPerson + "\'s " + game.players[0].currentCard.value);
 					botLoop();
 				}
 				else {
@@ -598,6 +611,7 @@ function doBotTurn(i) {
 			//console.log(i);
 			if(game.players[i].canPlay) {
 				botTurn(game.players[i]);
+				updateBackgrounds();
 			}
 		}, i*3000);
 }
@@ -607,6 +621,7 @@ botLoop() - loop for bots to play
 */
 
 function botLoop() {
+	updateBackgrounds();
 	for(var i = 1; i < 4; i++) {
 		doBotTurn(i);
 	}
@@ -651,8 +666,11 @@ function botLoop() {
 			
 			if(winnerPlayerNum != 0) {
 				message += "Game over. You lost. ";
+				message += "Player " + (winnerPlayerNum+1) + " wins with an " + winnerCardValue;
 			}
-			message += "Player " + (winnerPlayerNum+1) + " wins with an " + winnerCardValue;
+			else {
+				message += "Congratulations!! You win!";
+			}
 			$('#endModalMessage').html(message);
 			$('#endModal').modal().draggable({handle: ".modal-header"});
 			$('#playerCard1').removeAttr("onclick");
@@ -683,7 +701,7 @@ function addTargetableButtons() {
 	}
 	var count = 0;
 	var breakNode = document.createElement("br");
-	if(game.players[1].isTargetable) {
+	if(game.players[1].isTargetable && game.players[1].canPlay) {
 		var player2 = document.createElement("input");
 		player2.setAttribute("type", "radio");
 		player2.value = 2;
@@ -695,7 +713,7 @@ function addTargetableButtons() {
 		selectedUserForm.appendChild(breakNode);
 		count++;
 	}
-	if(game.players[2].isTargetable) {
+	if(game.players[2].isTargetable && game.players[2].canPlay) {
 		var player3 = document.createElement("input");
 		player3.setAttribute("type", "radio");
 		player3.value = 3;
@@ -707,7 +725,7 @@ function addTargetableButtons() {
 		selectedUserForm.appendChild(breakNode);
 		count ++;
 	}
-	if(game.players[3].isTargetable) {
+	if(game.players[3].isTargetable && game.players[3].canPlay) {
 		var player4 = document.createElement("input");
 		player4.setAttribute("type", "radio");
 		player4.value = 4;
@@ -723,7 +741,7 @@ function addTargetableButtons() {
 	if(count == 0) {	
 		var player0 = document.createElement("input");
 		player0.setAttribute("type", "radio");
-		player0.value = -1;
+		player0.value = 0;
 		player0.name = "user"
 		selectedUserForm.appendChild(player0);
 		var word = document.createElement("p");
@@ -992,6 +1010,26 @@ function playersLeftInPlay(params) {
 	return count;
 }
 
+/*
+updateBackgrounds: Goes through a small loop in the game, and changes the background of a player Area if that player is not in the game anymore
+*/
+
+function updateBackgrounds() {
+	for(var i = 0; i < 4; i++) {
+		if(!game.players[i].canPlay) {
+			switch(i) {
+				case 0:	$('#playerBottom').css("background","#ccc");
+						break;
+				case 1: $('#playerLeft').css("background","#ccc");
+						break;
+				case 2: $('#playerTop').css("background","#ccc");
+						break;
+				case 3: $('#playerRight').css("background","#ccc");
+						break;
+			}
+		}
+	}
+}
 
 
 
