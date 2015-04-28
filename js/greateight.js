@@ -688,6 +688,9 @@ botLoop() - loop for bots to play
 
 function botLoop() {
 	updateBackgrounds();
+	document.getElementById("playerCard1").onclick = "";
+	//make it where the user cannot click their current card
+	
 	for(var i = 1; i < 4; i++) {
 		doBotTurn(i);
 	}
@@ -748,6 +751,8 @@ function botLoop() {
 		}
 		//the game is still going
 		else {
+			//make user able to click card.
+			document.getElementById("playerCard1").onclick = function (){ playCard(0);};
 			//deal card to player.
 			game.players[0].newCard = game.deck.deal();
 			game.players[0].isTargetable = true;
