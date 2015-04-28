@@ -90,6 +90,10 @@
 	border: solid 1px purple;
 }
 
+#cardsInDeck {
+	color: red;
+}
+
 #playarea {
 	margin: auto;
 	padding: 0;
