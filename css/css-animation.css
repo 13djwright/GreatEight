@@ -20,6 +20,8 @@
 	left: 5%;
 	border: solid 1px blue;
 	border-radius: 8px;
+	color: rgba(13,79,75,1);
+	font-weight: bold;
 }
 
 #playerTop img{
@@ -39,6 +41,8 @@
 	left: 5%;
 	border: solid 1px green;
 	border-radius: 8px;
+	color: rgba(13,79,75,1);
+	font-weight: bold;
 }
 
 #playerLeft {
@@ -50,6 +54,8 @@
 	left: 1%;
 	border: solid 1px red;
 	border-radius: 8px;
+	color: rgba(13,79,75,1);
+	font-weight: bold;
 }
 
 #playerLeft img {
@@ -69,6 +75,8 @@
 	right: 1%;
 	border: solid 1px black;
 	border-radius: 8px;
+	color: rgba(13,79,75,1);
+	font-weight: bold;
 }
 
 #playerRight img {
@@ -88,10 +96,6 @@
 	bottom: 20%;
 	left: 25%;
 	border: solid 1px purple;
-}
-
-#cardsInDeck {
-	color: red;
 }
 
 #playarea {
@@ -114,6 +118,7 @@
 	margin: 10px auto;
 	border: 1px outset #ccc;
 	border-radius: 15px;
+	color: rgba(66,138,237,1);
 }
 
 .button-container {
@@ -124,7 +129,9 @@
 }
 
 #playerCard1, #playerCard2 {
-opacity:1.0;
+	position: relative;
+	left: 20;
+	opacity:1.0;
 }
 
 #playerCard1:hover, #playerCard2:hover { 
