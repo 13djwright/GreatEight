@@ -377,7 +377,7 @@ function playCard(cardNum) {
 			document.getElementById("playCardButton").onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				var guess = $('input[name=guess]:radio:checked').val();
-				if(selectedPerson != 0 && guess) {
+				if(selectedPerson > 0 && guess) {
 					console.log("check user and guess");
 					addToGameLog("You played a 1 and guessed that Player " + selectedPerson + " held a " + guess);
 					//addToGameLog("Player " + selectedPerson + " is holding a " + game.players[selectedPerson-1].currentCard.value);
