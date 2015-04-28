@@ -302,7 +302,7 @@ function botTurn( bot ) {
 				var discardedCardValue = game.players[targetPlayer].currentCard.value;
 				game.players[targetPlayer].currentCard = game.deck.deal();
 				if(targetPlayer == 0) {
-					addToGameLog("You had you discard your " + discardedCardValue + " and drew a " + game.players[targetPlayer].currentCard.value);
+					addToGameLog("You had to discard your " + discardedCardValue + " and drew a " + game.players[targetPlayer].currentCard.value);
 				}
 				else {
 					addToGameLog("Player " + (targetPlayer+1) + " discarded and redrew");
