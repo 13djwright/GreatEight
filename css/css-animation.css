@@ -12,6 +12,8 @@
 	display: none;
 }
 #playerTop {
+	background-color: aliceblue;
+	opacity: 0.4;
 	height: 15%;
 	width: 90%;
 	position: absolute;
@@ -29,6 +31,8 @@
 }
 
 #playerBottom {
+	background-color: aliceblue;
+	opacity: 0.4;
 	height: 15%;
 	width: 90%;
 	position: absolute;
@@ -38,6 +42,8 @@
 }
 
 #playerLeft {
+	background-color: aliceblue;
+	opacity: 0.4;
 	height: 66%;
 	width: 15%;
 	position: absolute;
@@ -55,6 +61,8 @@
 }
 
 #playerRight {
+	background-color: aliceblue;
+	opacity: 0.4;
 	height: 66%;
 	width: 15%;
 	position: absolute;
@@ -72,6 +80,8 @@
 }
 
 #playerCards {
+	background-color: aliceblue;
+	opacity: 0.4;
 	height: 25%;
 	width: 50%;
 	position: absolute;
@@ -93,6 +103,7 @@
 }
 
 .container {
+	background-image: url("../images/CardTableFelt.jpg");
 	background-color: aliceblue;
 	width: 800px;
 	height: 800px;
@@ -108,6 +119,8 @@
 }
 
 #playerCard1:hover, #playerCard2:hover { 
+	background-color: aliceblue;
+	opacity: 1.0;
 	border: solid 2px #FFFF00;
 }
 
