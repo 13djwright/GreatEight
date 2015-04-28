@@ -377,7 +377,7 @@ function playCard(cardNum) {
 			document.getElementById("playCardButton").onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
 				var guess = $('input[name=guess]:radio:checked').val();
-				if(selectedPerson && guess) {
+				if(selectedPerson != 0 && guess) {
 					console.log("check user and guess");
 					addToGameLog("You played a 1 and guessed that Player " + selectedPerson + " held a " + guess);
 					//addToGameLog("Player " + selectedPerson + " is holding a " + game.players[selectedPerson-1].currentCard.value);
@@ -405,6 +405,19 @@ function playCard(cardNum) {
 					displayPlayedCards(null, 1);
 					botLoop();
 				}
+				else if(selectedPerson == 0) {
+					addToGameLog("No other players targetable, you threw your " + cardSelected.value + " away");
+					game.players[0].playedCards.push(cardSelected);
+					game.players[0].currentCard = otherCard;
+					//set the newCard element to nothing
+					game.players[0].newCard = null;
+					//update the display here (card played goes in box, move other card over, and hide card.
+					document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+					document.getElementById("playerCard1").src = otherCard.image;
+					$('#userInput').modal('hide');
+					displayPlayedCards(null, 1);
+					botLoop();
+				}
 				//error something was not checked
 				else{
 					alert.innerHTML = "Select a user and a card guess.";
@@ -418,7 +431,7 @@ function playCard(cardNum) {
 			$('#userInput').modal().draggable({handle: ".modal-header"});
 			button.onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
-				if(selectedPerson) {
+				if(selectedPerson > 0) {
 					var selectedPersonCard = game.players[selectedPerson-1].currentCard;
 					game.players[0].playedCards.push(cardSelected);
 					game.players[0].currentCard = otherCard;
@@ -431,6 +444,19 @@ function playCard(cardNum) {
 					displayPlayedCards(null, 1);
 					//window.alert("Player " + selectedPerson + " is holding a " + selectedPersonCard.value);
 					addToGameLog("You played a 2. Player " + selectedPerson + " is holding a " + selectedPersonCard.value);
+					botLoop();
+				}
+				else if(selectedPerson == 0) {
+					addToGameLog("No other players targetable, you threw your " + cardSelected.value + " away");
+					game.players[0].playedCards.push(cardSelected);
+					game.players[0].currentCard = otherCard;
+					//set the newCard element to nothing
+					game.players[0].newCard = null;
+					//update the display here (card played goes in box, move other card over, and hide card.
+					document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+					document.getElementById("playerCard1").src = otherCard.image;
+					$('#userInput').modal('hide');
+					displayPlayedCards(null, 1);
 					botLoop();
 				}
 				else {
@@ -446,7 +472,7 @@ function playCard(cardNum) {
 			$('#userInput').modal().draggable({handle: ".modal-header"});
 			button.onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
-				if(selectedPerson) {
+				if(selectedPerson > 0) {
 					var selectedPersonCard = game.players[selectedPerson-1].currentCard;
 					game.players[0].playedCards.push(cardSelected);
 					game.players[0].currentCard = otherCard;
@@ -473,6 +499,19 @@ function playCard(cardNum) {
 					else {
 						console.log("something is broken in case 3");
 					}
+					botLoop();
+				}
+				else if(selectedPerson == 0) {
+					addToGameLog("No other players targetable, you threw your " + cardSelected.value + " away");
+					game.players[0].playedCards.push(cardSelected);
+					game.players[0].currentCard = otherCard;
+					//set the newCard element to nothing
+					game.players[0].newCard = null;
+					//update the display here (card played goes in box, move other card over, and hide card.
+					document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+					document.getElementById("playerCard1").src = otherCard.image;
+					$('#userInput').modal('hide');
+					displayPlayedCards(null, 1);
 					botLoop();
 				}
 				else {
@@ -505,7 +544,7 @@ function playCard(cardNum) {
 			$('#userInput').modal().draggable({handle: ".modal-header"});
 			button.onclick =  function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
-				if(selectedPerson) {
+				if(selectedPerson> 0) {
 					var selectedPersonCard = game.players[selectedPerson-1].currentCard;
 					game.players[0].playedCards.push(cardSelected);
 					game.players[0].currentCard = otherCard;
@@ -521,6 +560,19 @@ function playCard(cardNum) {
 					game.players[selectedPerson-1].currentCard = tempCard;
 					document.getElementById("playerCard1").src = game.players[0].currentCard.image;
 					addToGameLog("You played a 6 and switched your " + tempCard.value + " with Player " + selectedPerson + "\'s " + game.players[0].currentCard.value);
+					botLoop();
+				}
+				else if(selectedPerson == 0) {
+					addToGameLog("No other players targetable, you threw your " + cardSelected.value + " away");
+					game.players[0].playedCards.push(cardSelected);
+					game.players[0].currentCard = otherCard;
+					//set the newCard element to nothing
+					game.players[0].newCard = null;
+					//update the display here (card played goes in box, move other card over, and hide card.
+					document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+					document.getElementById("playerCard1").src = otherCard.image;
+					$('#userInput').modal('hide');
+					displayPlayedCards(null, 1);
 					botLoop();
 				}
 				else {
@@ -540,7 +592,7 @@ function playCard(cardNum) {
 			$('#userInput').modal().draggable({handle: ".modal-header"});
 			button.onclick = function() {
 				var selectedPerson = $('input[name=user]:radio:checked').val();
-				if(selectedPerson) {
+				if(selectedPerson > 0) {
 					var selectedPersonCard = game.players[selectedPerson-1].currentCard;
 					game.players[0].playedCards.push(cardSelected);
 					game.players[0].currentCard = otherCard;
@@ -563,6 +615,20 @@ function playCard(cardNum) {
 						addToGameLog("No cards left to draw, so Player " + selectedPerson + " drew the left over card");
 						game.players[selectedPerson-1].currentCard = game.deck.cards[0];
 					}
+					botLoop();
+				}
+				//NOTE: in the real game you must target yourself if there are no other players to target when playing this card. Therefor a 5,8 combination is automatic loss.
+				else if(selectedPerson == 0) {
+					addToGameLog("No other players targetable, you threw your " + cardSelected.value + " away");
+					game.players[0].playedCards.push(cardSelected);
+					game.players[0].currentCard = otherCard;
+					//set the newCard element to nothing
+					game.players[0].newCard = null;
+					//update the display here (card played goes in box, move other card over, and hide card.
+					document.getElementById("playerCard2").style.visibility = "hidden"; //hide the new card
+					document.getElementById("playerCard1").src = otherCard.image;
+					$('#userInput').modal('hide');
+					displayPlayedCards(null, 1);
 					botLoop();
 				}
 				else {
