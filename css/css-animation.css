@@ -12,8 +12,7 @@
 	display: none;
 }
 #playerTop {
-	background-color: aliceblue;
-	opacity: 0.4;
+	background-color:rgba(240,248,255,0.5);
 	height: 15%;
 	width: 90%;
 	position: absolute;
@@ -31,8 +30,7 @@
 }
 
 #playerBottom {
-	background-color: aliceblue;
-	opacity: 0.4;
+	background-color:rgba(240,248,255,0.5);
 	height: 15%;
 	width: 90%;
 	position: absolute;
@@ -42,8 +40,7 @@
 }
 
 #playerLeft {
-	background-color: aliceblue;
-	opacity: 0.4;
+	background-color:rgba(240,248,255,0.5);
 	height: 66%;
 	width: 15%;
 	position: absolute;
@@ -61,8 +58,7 @@
 }
 
 #playerRight {
-	background-color: aliceblue;
-	opacity: 0.4;
+	background-color:rgba(240,248,255,0.5);
 	height: 66%;
 	width: 15%;
 	position: absolute;
@@ -80,8 +76,8 @@
 }
 
 #playerCards {
-	background-color: aliceblue;
-	opacity: 0.4;
+	background-color:rgba(240,248,255,0.5);
+	
 	height: 25%;
 	width: 50%;
 	position: absolute;
@@ -118,8 +114,11 @@
 
 }
 
+#playerCard1, #playerCard2 {
+opacity:1.0;
+}
+
 #playerCard1:hover, #playerCard2:hover { 
-	background-color: aliceblue;
 	opacity: 1.0;
 	border: solid 2px #FFFF00;
 }
