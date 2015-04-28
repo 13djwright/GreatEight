@@ -8,7 +8,9 @@
 	padding: 30px;
 	width: 568px;
 }
-
+#playAgainButton {
+	display: none;
+}
 #playerTop {
 	height: 15%;
 	width: 90%;
@@ -109,7 +111,7 @@
 	border: solid 2px #FFFF00;
 }
 
-#gameLogButton {
+#gameLogButton , #playAgainButton{
 	margin-left: 90%;
 	margin-top: 2px;
 }

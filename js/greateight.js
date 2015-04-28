@@ -707,6 +707,7 @@ function botLoop() {
 			$('#endModal').modal().draggable({handle: '.modal-header'});
 			$('#playerCard1').removeAttr("onclick");
 			$('#playerCard2').removeAttr("onclick");
+			$("#playAgainButton").show();
 		}
 		//otherwise see if the player wins by being the only person left, player wins
 		else if(botsInPlay === 0) {
@@ -714,6 +715,7 @@ function botLoop() {
 			$('#endModal').modal().draggable({handle: '.modal-header'});
 			$('#playerCard1').removeAttr("onclick");
 			$('#playerCard2').removeAttr("onclick");
+			$("#playAgainButton").show();
 		}
 		//if there are no cards left to draw, compare all cards
 		else if(game.deck.cardsLeft() <= 0) {
@@ -741,6 +743,7 @@ function botLoop() {
 			$('#endModal').modal().draggable({handle: ".modal-header"});
 			$('#playerCard1').removeAttr("onclick");
 			$('#playerCard2').removeAttr("onclick");
+			$("#playAgainButton").show();
 			return;
 		}
 		//the game is still going
